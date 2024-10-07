@@ -11,11 +11,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.niilz.probierless.storage.EclipseStore
+import de.niilz.probierless.storage.StoreRoot
+import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    println("Creating Store")
+    val store = EclipseStore(applicationContext).store
+    println("setting root")
+    store.setRoot(StoreRoot())
+    println("starting storemanager")
+    store.start()
+
+    println("getting root")
+    val root = store.root() as StoreRoot
+
+    println("Adding a drink")
+    root.drinks.put("Bier", Drink("Bier", "BierEmoji"))
+
+    println("Storing the drinks")
+    store.store(root.drinks);
+
     enableEdgeToEdge()
     setContent {
       ProBierLessTheme {
