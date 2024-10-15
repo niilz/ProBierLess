@@ -61,6 +61,7 @@ dependencies {
   // EclipseStore
   implementation(libs.eclipse.store.storage.embedded)
   implementation(libs.eclipse.store.storage.embedded.configuration)
+  implementation(libs.eclipse.store.storage.cache)
 
   // TEST
   testImplementation(libs.junit)

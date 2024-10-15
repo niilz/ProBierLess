@@ -9,6 +9,7 @@ lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 eclipseStore = "1.4.0"
+#eclipseStore = "2.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,6 +28,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 eclipse-store-storage-embedded = { group = "org.eclipse.store", name = "storage-embedded", version.ref = "eclipseStore" }
 eclipse-store-storage-embedded-configuration = { group = "org.eclipse.store", name = "storage-embedded-configuration", version.ref = "eclipseStore" }
+eclipse-store-storage-cache = { group = "org.eclipse.store", name = "cache", version.ref = "eclipseStore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
