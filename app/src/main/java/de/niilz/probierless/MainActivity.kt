@@ -22,10 +22,12 @@ class MainActivity : ComponentActivity() {
 
     println("Creating Store")
     val store = EclipseStore(applicationContext).store
+    println("starting store")
+    store.start()
+    println("current root: ${store.root()}")
     println("setting root")
     store.setRoot(StoreRoot())
-    println("starting storemanager")
-    store.start()
+    println("current root: ${store.root()}")
 
     println("getting root")
     val root = store.root() as StoreRoot
