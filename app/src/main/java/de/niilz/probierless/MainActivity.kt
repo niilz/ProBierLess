@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
       ProBierLessTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
           Greeting(
-            name = "Android",
+            name = (store.root() as StoreRoot).drinks["Bier"]?.icon ?: "default",
             modifier = Modifier.padding(innerPadding)
           )
         }
