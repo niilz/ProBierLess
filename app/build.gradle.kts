@@ -42,7 +42,6 @@ android {
   packaging {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
-      excludes += "/META-INF/Eclipse-*.*" // Had to this for eclipse-store because of duplicate files
     }
   }
 }
