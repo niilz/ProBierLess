@@ -42,7 +42,7 @@ android {
   packaging {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
-      excludes += "/META-INF/Eclipse-*.*"
+      excludes += "/META-INF/Eclipse-*.*" // Had to this for eclipse-store because of duplicate files
     }
   }
 }
@@ -61,7 +61,6 @@ dependencies {
   // EclipseStore
   implementation(libs.eclipse.store.storage.embedded)
   implementation(libs.eclipse.store.storage.embedded.configuration)
-  implementation(libs.eclipse.store.storage.cache)
 
   // TEST
   testImplementation(libs.junit)
