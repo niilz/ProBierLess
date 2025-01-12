@@ -1,6 +1,7 @@
 package de.niilz.probierless
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,17 +27,17 @@ class MainActivity : ComponentActivity() {
 
         var root = store.root()
         if (root == null) {
-            println("Root is null! Setting a new StoreRoot")
+            Log.d(TAG, "Root is null! Setting a new StoreRoot")
             root = StoreRoot()
             store.setRoot(StoreRoot())
             store.storeRoot()
             root.drinks["Wein"] = Drink("Wein", "WeinEmoji")
             store.store(root.drinks);
         } else {
-            println("Root store alread present")
+            Log.d(TAG, "Root store alread present")
         }
 
-        println("Now: ${store.root()}")
+        Log.d(TAG, "Now: ${store.root()}")
 
         val drinks = (store.root() as StoreRoot).drinks
 
@@ -56,6 +57,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        val TAG: String = MainActivity::class.java.simpleName
+    }
 }
 
 @Composable
@@ -73,3 +78,4 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
