@@ -2,15 +2,28 @@ package de.niilz.probierless.storage
 
 import android.content.Context
 import org.eclipse.store.storage.embedded.configuration.types.EmbeddedStorageConfiguration
+import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 import java.io.File
 
-class EclipseStore(context: Context) {
+class EclipseStore {
+    private val storeData: File
+    val store: EmbeddedStorageManager
 
-  private val storeData = File(context.filesDir, "store-data")
+    constructor(context: Context) {
+        storeData = File(context.filesDir, "store-data")
+        store = init()
+    }
 
-  val store = EmbeddedStorageConfiguration.Builder()
-    .setStorageDirectory(storeData.absolutePath)
-    .setChannelCount(1)
-    .createEmbeddedStorageFoundation()
-    .createEmbeddedStorageManager()
+    constructor(storeDataPath: String) {
+        this.storeData = File(storeDataPath)
+        store = init()
+    }
+
+    private fun init(): EmbeddedStorageManager {
+        return EmbeddedStorageConfiguration.Builder()
+            .setStorageDirectory(this.storeData.absolutePath)
+            .setChannelCount(1)
+            .createEmbeddedStorageFoundation()
+            .createEmbeddedStorageManager()
+    }
 }
