@@ -5,7 +5,7 @@ plugins {
 
 android {
   namespace = "de.niilz.probierless"
-  compileSdk = 34
+  compileSdk = 35
 
   defaultConfig {
     applicationId = "de.niilz.probierless"
