@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -20,32 +21,37 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    println("Creating Store")
     val store = EclipseStore(applicationContext).store
-    println("starting store")
     store.start()
-    println("current root: ${store.root()}")
-    println("setting root")
-    store.setRoot(StoreRoot())
-    println("current root: ${store.root()}")
 
-    println("getting root")
-    val root = store.root() as StoreRoot
+    var root = store.root()
+    if (root == null) {
+      println("Root is null! Setting a new StoreRoot")
+      root = StoreRoot()
+      store.setRoot(StoreRoot())
+      store.storeRoot()
+      root.drinks["Wein"] = Drink("Wein", "WeinEmoji")
+      store.store(root.drinks);
+    } else {
+      println("Root store alread present")
+    }
 
-    println("Adding a drink")
-    root.drinks.put("Bier", Drink("Bier", "BierEmoji"))
+    println("Now: ${store.root()}")
 
-    println("Storing the drinks")
-    store.store(root.drinks);
+    val drinks = (store.root() as StoreRoot).drinks
 
     enableEdgeToEdge()
     setContent {
       ProBierLessTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-          Greeting(
-            name = (store.root() as StoreRoot).drinks["Bier"]?.icon ?: "default",
-            modifier = Modifier.padding(innerPadding)
-          )
+          Column {
+            drinks.forEach { drink ->
+              Greeting(
+                name = "${drink.key} ${drink.value.icon}",
+                modifier = Modifier.padding(innerPadding)
+              )
+            }
+          }
         }
       }
     }
