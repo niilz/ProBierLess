@@ -1,6 +1,6 @@
 package de.niilz.probierless
 
-import de.niilz.probierless.storage.EclipseStore
+import de.niilz.probierless.storage.Db
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.tracking.dto.Drink
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
@@ -19,7 +19,7 @@ import java.nio.file.Path
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class DbTest {
 
     companion object {
 
@@ -60,7 +60,7 @@ class ExampleUnitTest {
         }
 
         private fun launchDb(): EmbeddedStorageManager {
-            val db = EclipseStore(TEST_DATA_PATH)
+            val db = Db(TEST_DATA_PATH)
             val store = db.store
             store.start()
             return store

@@ -5,7 +5,7 @@ import org.eclipse.store.storage.embedded.configuration.types.EmbeddedStorageCon
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 import java.io.File
 
-class EclipseStore {
+class Db {
     private val storeData: File
     val store: EmbeddedStorageManager
 
