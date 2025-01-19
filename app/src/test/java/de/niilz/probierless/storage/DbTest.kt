@@ -1,7 +1,5 @@
-package de.niilz.probierless
+package de.niilz.probierless.storage
 
-import de.niilz.probierless.storage.Db
-import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.tracking.dto.Drink
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 import org.junit.AfterClass
