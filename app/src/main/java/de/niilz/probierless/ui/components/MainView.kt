@@ -13,12 +13,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 
+const val DRINK_INPUT_TAG = "drink-input"
+
 @Composable
-fun MainView(drinkState: HashMap<String, Drink>) {
+fun MainView(drinkState: Map<String, Drink>) {
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
     drinkStateViewModel.init(drinkState)
 
@@ -33,7 +36,10 @@ fun MainView(drinkState: HashMap<String, Drink>) {
                     modifier = Modifier.padding(innerPadding)
                 )
             }
-            TextField(value = newDrink, onValueChange = { newDrink = it })
+            TextField(
+                modifier = Modifier.testTag(DRINK_INPUT_TAG),
+                value = newDrink,
+                onValueChange = { newDrink = it })
             TextField(value = newIcon, onValueChange = { newIcon = it })
             Button(onClick = {
                 drinkStateViewModel.addDrink(newDrink, newIcon)
