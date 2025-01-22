@@ -1,69 +1,58 @@
 package de.niilz.probierless
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import de.niilz.probierless.storage.EclipseStore
+import de.niilz.probierless.storage.Db
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.tracking.dto.Drink
+import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    println("Creating Store")
-    val store = EclipseStore(applicationContext).store
-    println("starting store")
-    store.start()
-    println("current root: ${store.root()}")
-    println("setting root")
-    store.setRoot(StoreRoot())
-    println("current root: ${store.root()}")
+        val store = Db(applicationContext).store
+        store.start()
 
-    println("getting root")
-    val root = store.root() as StoreRoot
-
-    println("Adding a drink")
-    root.drinks.put("Bier", Drink("Bier", "BierEmoji"))
-
-    println("Storing the drinks")
-    store.store(root.drinks);
-
-    enableEdgeToEdge()
-    setContent {
-      ProBierLessTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-          Greeting(
-            name = (store.root() as StoreRoot).drinks["Bier"]?.icon ?: "default",
-            modifier = Modifier.padding(innerPadding)
-          )
+        var root = store.root()
+        if (root == null) {
+            Log.d(TAG, "Root is null! Setting a new StoreRoot")
+            root = StoreRoot()
+            store.setRoot(StoreRoot())
+            store.storeRoot()
+            root.drinks["Wein"] = Drink("Wein", "WeinEmoji")
+            store.store(root.drinks);
+        } else {
+            Log.d(TAG, "Root store alread present")
         }
-      }
-    }
-  }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Text(
-    text = "Hello $name!",
-    modifier = modifier
-  )
+        Log.d(TAG, "Now: ${store.root()}")
+
+        enableEdgeToEdge()
+        setContent {
+            val drinkState = (store.root() as StoreRoot).drinks
+            ProBierLessTheme {
+                MainView(drinkState)
+            }
+        }
+    }
+
+    companion object {
+        val TAG: String = MainActivity::class.java.simpleName
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-  ProBierLessTheme {
-    Greeting("Android")
-  }
+    ProBierLessTheme {
+        //MainView("Android")
+    }
 }
+
