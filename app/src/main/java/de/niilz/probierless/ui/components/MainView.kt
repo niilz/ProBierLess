@@ -19,6 +19,7 @@ import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 
 const val DRINK_INPUT_TAG = "drink-input"
+const val ICON_INPUT_TAG = "icon-input"
 
 @Composable
 fun MainView(drinkState: Map<String, Drink>) {
@@ -40,7 +41,10 @@ fun MainView(drinkState: Map<String, Drink>) {
                 modifier = Modifier.testTag(DRINK_INPUT_TAG),
                 value = newDrink,
                 onValueChange = { newDrink = it })
-            TextField(value = newIcon, onValueChange = { newIcon = it })
+            TextField(
+                modifier = Modifier.testTag(ICON_INPUT_TAG),
+                value = newIcon,
+                onValueChange = { newIcon = it })
             Button(onClick = {
                 drinkStateViewModel.addDrink(newDrink, newIcon)
             }) {

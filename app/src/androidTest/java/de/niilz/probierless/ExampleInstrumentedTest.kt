@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.ui.components.DRINK_INPUT_TAG
+import de.niilz.probierless.ui.components.ICON_INPUT_TAG
 import de.niilz.probierless.ui.components.MainView
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -40,12 +41,21 @@ class ExampleInstrumentedTest {
         }
         rule.setContent { MainView(drinks) }
 
-        // Insert a new text
+        // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
         drinkInput.assertExists()
         drinkInput.performTextInput("Apfel")
+
+        // Insert icon
+        val appleEmoji = "\uD83C\uDF4E";
+        val iconInput = rule.onNodeWithTag(ICON_INPUT_TAG)
+        iconInput.assertExists()
+        iconInput.performTextInput(appleEmoji)
+
+        // When
         rule.onNodeWithText("createDrink").performClick()
 
-        rule.onNodeWithText("Hello Apfel!").assertExists()
+        // Then
+        rule.onNodeWithText("Hello Apfel $appleEmoji!").assertExists()
     }
 }
