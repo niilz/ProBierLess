@@ -32,6 +32,7 @@ fun MainView(drinkState: Map<String, Drink>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // TODO: add LazyGrid here for existing drink-counter-clickables
             drinkStateViewModel.drinkState.forEach { drink ->
                 DrinkCounter(
                     name = "${drink.key} ${drink.value.icon}",
