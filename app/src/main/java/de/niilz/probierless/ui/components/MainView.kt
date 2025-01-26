@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,13 +35,16 @@ fun MainView(drinkState: Map<String, Drink>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // TODO: add LazyGrid here for existing drink-counter-clickables
-            drinkStateViewModel.drinkState.forEach { drink ->
-                DrinkCounter(
-                    name = drink.key,
-                    icon = drink.value.icon,
-                    modifier = Modifier.padding(innerPadding)
-                )
+            val drinksMap: Map<String, Drink> = drinkStateViewModel.drinkState.toMap()
+            val drinks: List<Drink> = drinksMap.values.toList()
+            LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+                items(drinks) { drink ->
+                    DrinkCounter(
+                        name = drink.name,
+                        icon = drink.icon,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
             DrinkCreator(drinkStateViewModel)
             Button(onClick = { drinkStateViewModel.clearDrinks() }) {
