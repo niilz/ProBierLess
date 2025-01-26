@@ -35,7 +35,8 @@ fun MainView(drinkState: Map<String, Drink>) {
             // TODO: add LazyGrid here for existing drink-counter-clickables
             drinkStateViewModel.drinkState.forEach { drink ->
                 DrinkCounter(
-                    name = "${drink.key} ${drink.value.icon}",
+                    name = drink.key,
+                    icon = drink.value.icon,
                     modifier = Modifier.padding(innerPadding)
                 )
             }
