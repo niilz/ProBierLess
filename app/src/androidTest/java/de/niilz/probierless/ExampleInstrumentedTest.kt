@@ -47,7 +47,7 @@ class ExampleInstrumentedTest {
         drinkInput.performTextInput("Apfel")
 
         // Insert icon
-        val appleEmoji = "\uD83C\uDF4E";
+        val appleEmoji = "\uD83C\uDF4E"; // apple icon
         val iconInput = rule.onNodeWithTag(ICON_INPUT_TAG)
         iconInput.assertExists()
         iconInput.performTextInput(appleEmoji)

@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
@@ -25,7 +25,7 @@ fun MainView(drinkState: Map<String, Drink>) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = Color.hsl(200f, 0.5f, 0.2f)
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -41,7 +41,7 @@ fun MainView(drinkState: Map<String, Drink>) {
             }
             DrinkCreator(drinkStateViewModel)
             Button(onClick = { drinkStateViewModel.clearDrinks() }) {
-                Text(text = "clear all")
+                Text(text = "clear all", color = MaterialTheme.colorScheme.onSecondary)
             }
         }
     }
