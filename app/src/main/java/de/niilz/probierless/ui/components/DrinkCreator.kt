@@ -48,7 +48,7 @@ fun DrinkCreator(drinkStateViewModel: DrinkStateViewModel) {
         Button(onClick = {
             drinkStateViewModel.addDrink(newDrink, newIcon)
         }) {
-            Text(text = "createDrink", color = MaterialTheme.colorScheme.onSecondary)
+            Text(text = "createDrink", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }

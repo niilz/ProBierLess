@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     ProBierLessTheme {
-        //MainView("Android")
+        MainView(mutableMapOf())
     }
 }
 

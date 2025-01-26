@@ -41,7 +41,7 @@ fun MainView(drinkState: Map<String, Drink>) {
             }
             DrinkCreator(drinkStateViewModel)
             Button(onClick = { drinkStateViewModel.clearDrinks() }) {
-                Text(text = "clear all", color = MaterialTheme.colorScheme.onSecondary)
+                Text(text = "clear all", color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }

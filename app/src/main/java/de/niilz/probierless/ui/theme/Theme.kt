@@ -20,11 +20,11 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    background = Orange,
+    background = OrangeBright,
     onBackground = Blue,
-    primary = BlueBright,
+    primary = Blue,
     //secondary = Color.White,
-    onPrimary = Orange,
+    onPrimary = OrangeBright,
     //onSecondary = BlueBright,
 
     /* Other default colors to override
