@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun DrinkCounter(name: String, icon: String, modifier: Modifier) {
     Card(
+        // TODO: Have gaps between Cards (or between lazy-grid-columns)
         onClick = { println("clicked") },
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -23,7 +24,7 @@ fun DrinkCounter(name: String, icon: String, modifier: Modifier) {
         )
     ) {
         Column(
-            modifier = modifier.fillMaxWidth(0.3f),
+            modifier = modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
