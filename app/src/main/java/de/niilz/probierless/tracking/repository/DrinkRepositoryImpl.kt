@@ -2,6 +2,7 @@ package de.niilz.probierless.tracking.repository
 
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.tracking.dto.DrinkDto
+import de.niilz.probierless.tracking.mapper.fromDto
 import de.niilz.probierless.tracking.mapper.toDto
 
 class DrinkRepositoryImpl(private val drinkStore: StoreRoot) : DrinkRepository {
@@ -11,6 +12,7 @@ class DrinkRepositoryImpl(private val drinkStore: StoreRoot) : DrinkRepository {
     }
 
     override fun addDrink(drink: DrinkDto) {
-        TODO("Not yet implemented")
+        // FIXME: needs ref to store to call: store.store(drinks)
+        drinkStore.drinks.add(fromDto(drink))
     }
 }

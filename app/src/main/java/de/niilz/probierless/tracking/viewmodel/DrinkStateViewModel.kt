@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import de.niilz.probierless.MainActivity
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.mapper.fromUi
 import de.niilz.probierless.ui.mapper.toUi
 
 class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewModel() {
@@ -19,11 +20,14 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
     }
 
     fun addDrink(newDrink: String, newDrinkIcon: String?) {
-        drinkState.add(Drink(newDrink, newDrinkIcon ?: "$newDrink-icon"))
+        val drink = Drink(newDrink, newDrinkIcon ?: "$newDrink-icon")
+        drinkState.add(drink)
+        drinkRepository.addDrink(fromUi(drink))
     }
 
     fun clearDrinks() {
         drinkState.clear()
+        // TODO: Clear repo
     }
 
     companion object {
