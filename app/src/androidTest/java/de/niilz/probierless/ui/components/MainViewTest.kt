@@ -1,4 +1,4 @@
-package de.niilz.probierless
+package de.niilz.probierless.ui.components
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -8,9 +8,6 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.niilz.probierless.storage.entity.DrinkEntity
-import de.niilz.probierless.ui.components.DRINK_INPUT_TAG
-import de.niilz.probierless.ui.components.ICON_INPUT_TAG
-import de.niilz.probierless.ui.components.MainView
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +19,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class MainViewTest {
 
     @get:Rule
     val rule = createComposeRule()
@@ -35,7 +32,7 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    fun canAddNewDrink() {
+    fun canAddNewDrinkToUi() {
         val drinks = listOf("Bier", "Wein").associateWith {
             DrinkEntity(it, "$it-icon")
         }
