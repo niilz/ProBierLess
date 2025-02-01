@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
             store.setRoot(StoreRoot())
         }
 
-        drinkRepository = DrinkRepositoryImpl(store)
 
         var root = store.root()
         if (root == null) {
@@ -47,6 +46,8 @@ class MainActivity : ComponentActivity() {
         }
 
         Log.d(TAG, "Now: ${store.root()}")
+
+        drinkRepository = DrinkRepositoryImpl(store)
 
         enableEdgeToEdge()
         setContent {
