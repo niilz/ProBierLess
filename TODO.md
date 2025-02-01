@@ -1,4 +1,8 @@
 # TODO
 
-- Update the eclipse store version of the drinkstate (persist the changes)
-- Create a Drink-Ui object that can be created to be tapped as a counter
+- Add the Store to the Repository
+- add the Repository to the ViewModel
+- replace entity with dto in business layer
+- test that viewModel updates Store
+- enlarge font-size
+- swap drink and icon
