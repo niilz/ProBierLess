@@ -1,22 +1,22 @@
 package de.niilz.probierless.storage
 
 import android.content.Context
+import android.util.Log
+import org.eclipse.serializer.persistence.binary.exceptions.BinaryPersistenceException
 import org.eclipse.store.storage.embedded.configuration.types.EmbeddedStorageConfiguration
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 import java.io.File
 
 class Db {
     private val storeData: File
-    val store: EmbeddedStorageManager
+    val store: EmbeddedStorageManager by lazy { init() }
 
     constructor(context: Context) {
         storeData = File(context.filesDir, "store-data")
-        store = init()
     }
 
     constructor(storeDataPath: String) {
         this.storeData = File(storeDataPath)
-        store = init()
     }
 
     private fun init(): EmbeddedStorageManager {
@@ -25,5 +25,26 @@ class Db {
             .setChannelCount(1)
             .createEmbeddedStorageFoundation()
             .createEmbeddedStorageManager()
+    }
+
+    fun launchStore() {
+        try {
+            store.start()
+        } catch (e: BinaryPersistenceException) {
+            Log.e(TAG, "Data structure is incompatible. Store gets reset")
+            store.setRoot(StoreRoot())
+        }
+
+        val root = store.root()
+        if (root == null) {
+            Log.d(TAG, "Root is null! Setting a new StoreRoot")
+            store.setRoot(StoreRoot())
+        } else {
+            Log.d(TAG, "Root store is already present, launching existing store")
+        }
+    }
+
+    private companion object {
+        val TAG: String = Db::class.java.simpleName
     }
 }
