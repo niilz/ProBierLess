@@ -27,7 +27,7 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
 
     fun clearDrinks() {
         drinkState.clear()
-        // TODO: Clear repo
+        drinkRepository.clearAllDrinks()
     }
 
     companion object {

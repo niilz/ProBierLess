@@ -22,6 +22,8 @@ class DrinkStateViewModelTest {
         override fun addDrink(drink: DrinkDto) {
             store.add(drink)
         }
+
+        override fun clearAllDrinks() = store.clear()
     }
 
     private val drinkStateViewModel = DrinkStateViewModel(repoMock)
@@ -50,5 +52,20 @@ class DrinkStateViewModelTest {
             DrinkDto(TEST_DRINK, TEST_ICON),
             allRepoDrinks.get(0)
         )
+    }
+
+    @Test
+    fun clearingRemovesUiAndRepoState() {
+        assertTrue(drinkStateViewModel.drinkState.isEmpty())
+        // given
+        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON);
+        assertEquals(1, drinkStateViewModel.drinkState.size)
+
+        // when
+        drinkStateViewModel.clearDrinks()
+
+        // then
+        assertTrue("viewmodel-state should be empty", drinkStateViewModel.drinkState.isEmpty())
+        assertTrue("repo should be empty", repoMock.fetchAllDrinks().isEmpty())
     }
 }

@@ -18,4 +18,9 @@ class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : Dr
         drinkStore.drinks.add(fromDto(drink))
         storeManager.store(drinkStore.drinks)
     }
+
+    override fun clearAllDrinks() {
+        drinkStore.drinks.clear()
+        storeManager.store(drinkStore.drinks)
+    }
 }
