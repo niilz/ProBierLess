@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DrinkCounter(name: String, icon: String, modifier: Modifier) {
+fun DrinkCounter(name: String, icon: String, modifier: Modifier = Modifier) {
     Card(
         // TODO: Have gaps between Cards (or between lazy-grid-columns)
         onClick = { println("clicked") },

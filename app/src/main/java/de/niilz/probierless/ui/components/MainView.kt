@@ -2,6 +2,7 @@ package de.niilz.probierless.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.tracking.dto.Drink
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
@@ -31,18 +33,24 @@ fun MainView(drinkState: Map<String, Drink>) {
         containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val drinksMap: Map<String, Drink> = drinkStateViewModel.drinkState.toMap()
             val drinks: List<Drink> = drinksMap.values.toList()
-            LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                contentPadding = PaddingValues(all = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 items(drinks) { drink ->
                     DrinkCounter(
                         name = drink.name,
                         icon = drink.icon,
-                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
