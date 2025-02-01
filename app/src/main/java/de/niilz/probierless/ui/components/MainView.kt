@@ -17,16 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
+import de.niilz.probierless.ui.data.Drink
 
 const val DRINK_INPUT_TAG = "drink-input"
 const val ICON_INPUT_TAG = "icon-input"
 
 @Composable
-fun MainView(drinkState: Map<String, DrinkEntity>) {
-    val drinkStateViewModel = viewModel<DrinkStateViewModel>()
-    drinkStateViewModel.init(drinkState)
+fun MainView() {
+    val drinkStateViewModel = viewModel<DrinkStateViewModel>(factory = DrinkStateViewModel.Factory)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

@@ -25,4 +25,19 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
     fun clearDrinks() {
         drinkState.clear()
     }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val drinkRepository =
+                    (this[VIEW_MODEL_STORE_OWNER_KEY] as MainActivity).drinkRepository
+                val drinkStateViewModel = DrinkStateViewModel(drinkRepository)
+                val allDrinks = drinkRepository.fetchAllDrinks().map {
+                    toUi(it)
+                }
+                drinkStateViewModel.init(allDrinks)
+                drinkStateViewModel
+            }
+        }
+    }
 }

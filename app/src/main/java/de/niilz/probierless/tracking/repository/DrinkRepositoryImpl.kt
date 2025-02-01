@@ -9,4 +9,8 @@ class DrinkRepositoryImpl(private val drinkStore: StoreRoot) : DrinkRepository {
     override fun fetchAllDrinks(): List<DrinkDto> {
         return drinkStore.drinks.map { toDto(it) }
     }
+
+    override fun addDrink(drink: DrinkDto) {
+        TODO("Not yet implemented")
+    }
 }
