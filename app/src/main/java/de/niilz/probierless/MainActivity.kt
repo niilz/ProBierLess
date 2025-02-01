@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.storage.StoreRoot
-import de.niilz.probierless.tracking.dto.Drink
+import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             root = StoreRoot()
             store.setRoot(StoreRoot())
             store.storeRoot()
-            root.drinks["Wein"] = Drink("Wein", "WeinEmoji")
+            root.drinks["Wein"] = DrinkEntity("Wein", "WeinEmoji")
             store.store(root.drinks);
         } else {
             Log.d(TAG, "Root store alread present")

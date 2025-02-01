@@ -17,14 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.niilz.probierless.tracking.dto.Drink
+import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 
 const val DRINK_INPUT_TAG = "drink-input"
 const val ICON_INPUT_TAG = "icon-input"
 
 @Composable
-fun MainView(drinkState: Map<String, Drink>) {
+fun MainView(drinkState: Map<String, DrinkEntity>) {
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
     drinkStateViewModel.init(drinkState)
 
@@ -39,8 +39,8 @@ fun MainView(drinkState: Map<String, Drink>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinksMap: Map<String, Drink> = drinkStateViewModel.drinkState.toMap()
-            val drinks: List<Drink> = drinksMap.values.toList()
+            val drinksMap: Map<String, DrinkEntity> = drinkStateViewModel.drinkState.toMap()
+            val drinks: List<DrinkEntity> = drinksMap.values.toList()
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(all = 20.dp),

@@ -7,7 +7,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import de.niilz.probierless.tracking.dto.Drink
+import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.ui.components.DRINK_INPUT_TAG
 import de.niilz.probierless.ui.components.ICON_INPUT_TAG
 import de.niilz.probierless.ui.components.MainView
@@ -37,7 +37,7 @@ class ExampleInstrumentedTest {
     @Test
     fun canAddNewDrink() {
         val drinks = listOf("Bier", "Wein").associateWith {
-            Drink(it, "$it-icon")
+            DrinkEntity(it, "$it-icon")
         }
         rule.setContent { MainView(drinks) }
 
