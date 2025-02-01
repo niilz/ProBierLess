@@ -32,10 +32,9 @@ class MainActivity : ComponentActivity() {
             store.setRoot(StoreRoot())
         }
 
+        drinkRepository = DrinkRepositoryImpl(store)
+
         var root = store.root()
-        root?.let { it as? StoreRoot }?.let {
-            drinkRepository = DrinkRepositoryImpl(it)
-        }
         if (root == null) {
             Log.d(TAG, "Root is null! Setting a new StoreRoot")
             root = StoreRoot()
