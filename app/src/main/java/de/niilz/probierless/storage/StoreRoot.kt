@@ -4,5 +4,5 @@ import de.niilz.probierless.storage.entity.DrinkEntity
 
 class StoreRoot {
 
-    var drinks = HashMap<String, DrinkEntity>()
+    var drinks = mutableListOf<DrinkEntity>()
 }

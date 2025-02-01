@@ -11,26 +11,37 @@ import de.niilz.probierless.storage.Db
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.repository.DrinkRepository
+import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.theme.ProBierLessTheme
+import org.eclipse.serializer.persistence.binary.exceptions.BinaryPersistenceException
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var drinkRepository: DrinkRepository
+    lateinit var drinkRepository: DrinkRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         val store = Db(applicationContext).store
-        store.start()
+        try {
+            store.start()
+        } catch (e: BinaryPersistenceException) {
+            Log.e(TAG, "Data structure is incompatible. Store gets reset")
+            store.setRoot(StoreRoot())
+        }
 
         var root = store.root()
+        root?.let { it as? StoreRoot }?.let {
+            drinkRepository = DrinkRepositoryImpl(it)
+        }
         if (root == null) {
             Log.d(TAG, "Root is null! Setting a new StoreRoot")
             root = StoreRoot()
             store.setRoot(StoreRoot())
             store.storeRoot()
-            root.drinks["Wein"] = DrinkEntity("Wein", "WeinEmoji")
+            root.drinks.add(DrinkEntity("Wein", "WeinEmoji"))
             store.store(root.drinks);
         } else {
             Log.d(TAG, "Root store alread present")
@@ -40,9 +51,8 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val drinkState = (store.root() as StoreRoot).drinks
             ProBierLessTheme {
-                MainView(drinkState)
+                MainView()
             }
         }
     }
@@ -56,7 +66,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     ProBierLessTheme {
-        MainView(mutableMapOf())
+        MainView()
     }
 }
 

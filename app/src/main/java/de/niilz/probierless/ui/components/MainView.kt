@@ -39,8 +39,7 @@ fun MainView(drinkState: Map<String, DrinkEntity>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinksMap: Map<String, DrinkEntity> = drinkStateViewModel.drinkState.toMap()
-            val drinks: List<DrinkEntity> = drinksMap.values.toList()
+            val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(all = 20.dp),

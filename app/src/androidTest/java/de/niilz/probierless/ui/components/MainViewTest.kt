@@ -7,7 +7,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import de.niilz.probierless.storage.entity.DrinkEntity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -33,10 +32,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        val drinks = listOf("Bier", "Wein").associateWith {
-            DrinkEntity(it, "$it-icon")
-        }
-        rule.setContent { MainView(drinks) }
+        rule.setContent { MainView() }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)

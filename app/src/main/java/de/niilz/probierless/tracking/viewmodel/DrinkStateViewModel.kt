@@ -1,19 +1,25 @@
 package de.niilz.probierless.tracking.viewmodel
 
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.ViewModel
-import de.niilz.probierless.storage.entity.DrinkEntity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import de.niilz.probierless.MainActivity
+import de.niilz.probierless.tracking.repository.DrinkRepository
+import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.mapper.toUi
 
-class DrinkStateViewModel : ViewModel() {
-    val drinkState = mutableStateMapOf<String, DrinkEntity>()
+class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewModel() {
+    val drinkState = mutableStateListOf<Drink>()
 
-    fun init(drinkState: Map<String, DrinkEntity>) {
-        this.drinkState.putAll(drinkState)
-
+    fun init(drinkState: List<Drink>) {
+        this.drinkState.addAll(drinkState)
     }
 
     fun addDrink(newDrink: String, newDrinkIcon: String?) {
-        drinkState[newDrink] = DrinkEntity(newDrink, newDrinkIcon ?: "$newDrink-icon")
+        drinkState.add(Drink(newDrink, newDrinkIcon ?: "$newDrink-icon"))
     }
 
     fun clearDrinks() {

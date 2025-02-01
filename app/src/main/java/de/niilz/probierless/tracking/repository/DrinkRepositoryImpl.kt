@@ -7,6 +7,6 @@ import de.niilz.probierless.tracking.mapper.toDto
 class DrinkRepositoryImpl(private val drinkStore: StoreRoot) : DrinkRepository {
 
     override fun fetchAllDrinks(): List<DrinkDto> {
-        return drinkStore.drinks.map { toDto(it.value) }
+        return drinkStore.drinks.map { toDto(it) }
     }
 }
