@@ -10,10 +10,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.storage.entity.DrinkEntity
+import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var drinkRepository: DrinkRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
