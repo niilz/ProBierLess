@@ -22,7 +22,6 @@ class DbTest {
     companion object {
 
         private const val TEST_DATA_PATH = "./tmp/test-data";
-        private const val TEST_NAME = "test-name"
 
         @JvmStatic
         @BeforeClass
@@ -32,7 +31,7 @@ class DbTest {
             store.setRoot(storeRoot)
             store.storeRoot()
 
-            storeRoot.drinks[TEST_NAME] = DrinkEntity("foo", "icon")
+            storeRoot.drinks.add(DrinkEntity("foo", "icon"))
             store.store(storeRoot.drinks)
 
             store.shutdown()
@@ -69,9 +68,9 @@ class DbTest {
     fun dataLoads() {
         when (val storeRoot = launchDb().root()) {
             is StoreRoot -> {
-                val testData = storeRoot.drinks[TEST_NAME]
+                val testData = storeRoot.drinks[0]
                 assertNotNull(testData)
-                assertEquals("foo", testData?.name)
+                assertEquals("foo", testData.name)
             }
 
             else -> fail("storeRoot is not a StoreRoot")
