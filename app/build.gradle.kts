@@ -63,6 +63,7 @@ dependencies {
 
     // compose
     implementation(libs.androidx.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
 
     // EclipseStore
     implementation(libs.eclipse.store.storage.embedded)
