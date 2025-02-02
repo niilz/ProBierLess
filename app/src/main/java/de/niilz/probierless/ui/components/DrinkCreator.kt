@@ -16,10 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
-import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 
 @Composable
-fun DrinkCreator(drinkStateViewModel: DrinkStateViewModel) {
+fun DrinkCreator(addDrink: (String, String) -> Unit) {
 
     var newDrink by remember { mutableStateOf("") }
     var newIcon by remember { mutableStateOf("") }
@@ -46,7 +45,7 @@ fun DrinkCreator(drinkStateViewModel: DrinkStateViewModel) {
                 onValueChange = { newIcon = it })
         }
         Button(onClick = {
-            drinkStateViewModel.addDrink(newDrink, newIcon)
+            addDrink(newDrink, newIcon)
         }) {
             Text(text = "createDrink", color = MaterialTheme.colorScheme.onPrimary)
         }

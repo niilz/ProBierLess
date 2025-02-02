@@ -1,5 +1,6 @@
 package de.niilz.probierless.tracking.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.ViewModel
@@ -21,7 +22,9 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
 
     fun addDrink(newDrink: String, newDrinkIcon: String?) {
         val drink = Drink(newDrink, newDrinkIcon ?: "$newDrink-icon")
+        Log.d(TAG, "Add drink '$newDrink' to UI-state")
         drinkState.add(drink)
+        Log.d(TAG, "Add drink '$newDrink' to drink-repo")
         drinkRepository.addDrink(fromUi(drink))
     }
 
@@ -43,5 +46,6 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
                 drinkStateViewModel
             }
         }
+        private val TAG: String = DrinkStateViewModel::class.java.simpleName
     }
 }

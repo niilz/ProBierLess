@@ -16,16 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.data.Drink
 
 const val DRINK_INPUT_TAG = "drink-input"
 const val ICON_INPUT_TAG = "icon-input"
 
 @Composable
-fun MainView() {
-    val drinkStateViewModel = viewModel<DrinkStateViewModel>(factory = DrinkStateViewModel.Factory)
+fun MainView(drinkState: List<Drink>, clearDrinks: () -> Unit, addDrink: (String, String) -> Unit) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -38,7 +35,7 @@ fun MainView() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
+            val drinks: List<Drink> = drinkState.toList()
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(all = 20.dp),
@@ -52,8 +49,8 @@ fun MainView() {
                     )
                 }
             }
-            DrinkCreator(drinkStateViewModel)
-            Button(onClick = { drinkStateViewModel.clearDrinks() }) {
+            DrinkCreator(addDrink)
+            Button(onClick = clearDrinks) {
                 Text(text = "clear all", color = MaterialTheme.colorScheme.onPrimary)
             }
         }

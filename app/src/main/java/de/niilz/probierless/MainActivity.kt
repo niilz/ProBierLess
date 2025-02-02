@@ -7,9 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
+import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
@@ -30,7 +32,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProBierLessTheme {
-                MainView()
+                val drinkStateViewModel =
+                    viewModel<DrinkStateViewModel>(factory = DrinkStateViewModel.Factory)
+                MainView(
+                    drinkStateViewModel.drinkState,
+                    drinkStateViewModel::clearDrinks,
+                    drinkStateViewModel::addDrink
+                )
             }
         }
     }
@@ -44,7 +52,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     ProBierLessTheme {
-        MainView()
+        MainView(
+            listOf(),
+            {},
+            { _, _ -> println("Not used in preview") }
+        )
     }
 }
 
