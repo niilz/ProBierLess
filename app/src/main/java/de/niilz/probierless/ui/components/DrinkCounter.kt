@@ -28,8 +28,8 @@ fun DrinkCounter(name: String, icon: String, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = name, modifier = modifier)
             Text(text = icon, modifier = modifier)
+            Text(text = name, modifier = modifier)
         }
     }
 }

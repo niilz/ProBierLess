@@ -32,17 +32,17 @@ fun DrinkCreator(addDrink: (String, String) -> Unit) {
             OutlinedTextField(
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .testTag(DRINK_INPUT_TAG),
-                value = newDrink,
-                onValueChange = { newDrink = it })
+                    .fillMaxWidth(0.3f)
+                    .testTag(ICON_INPUT_TAG),
+                value = newIcon,
+                onValueChange = { newIcon = it })
             OutlinedTextField(
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag(ICON_INPUT_TAG),
-                value = newIcon,
-                onValueChange = { newIcon = it })
+                    .testTag(DRINK_INPUT_TAG),
+                value = newDrink,
+                onValueChange = { newDrink = it })
         }
         Button(onClick = {
             addDrink(newDrink, newIcon)
