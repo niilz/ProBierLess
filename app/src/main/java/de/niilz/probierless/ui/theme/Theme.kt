@@ -8,33 +8,32 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    background = Blue,
-    onBackground = OrangeBright,
-    primary = Orange,
-    //secondary = Color.White,
-    onPrimary = BlueBright,
-    //onSecondary = BlueBright,
-    primaryContainer = Orange,
-    onPrimaryContainer = BlueBright,
-    surface = Color.Black,
-    onSurface = Color.White,
+    background = backgroundDark,
+    onBackground = onBackgroundDark,
+    primary = primaryDark,
+    secondary = secondaryDark,
+    onPrimary = onPrimaryDark,
+    onSecondary = onSecondaryDark,
+    primaryContainer = primaryContainerDark,
+    onPrimaryContainer = onPrimaryDark,
+    surface = surfaceDark,
+    onSurface = onSurfaceDark,
 )
 
 private val LightColorScheme = lightColorScheme(
-    background = OrangeBright,
-    onBackground = Blue,
-    primary = Blue,
-    //secondary = Color.White,
-    onPrimary = OrangeBright,
-    //onSecondary = BlueBright,
-    primaryContainer = Blue,
-    onPrimaryContainer = OrangeBright,
-    surface = Color.White,
-    onSurface = Color.Black,
+    background = backgroundLight,
+    onBackground = onBackgroundLight,
+    primary = primaryLight,
+    secondary = secondaryLight,
+    onPrimary = onPrimaryLight,
+    onSecondary = onSecondaryLight,
+    primaryContainer = primaryContainerLight,
+    onPrimaryContainer = onPrimaryLight,
+    surface = surfaceLight,
+    onSurface = onSurfaceLight,
 
     /* Other default colors to override
       surface = Color(0xFFFFFBFE),
@@ -47,7 +46,6 @@ private val LightColorScheme = lightColorScheme(
 fun ProBierLessTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    // TODO: How to actually figure out if dynamicColors is set?
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

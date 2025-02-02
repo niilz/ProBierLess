@@ -1,5 +1,6 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -50,7 +51,13 @@ fun MainView(drinkState: List<Drink>, clearDrinks: () -> Unit, addDrink: (String
                 }
             }
             DrinkCreator(addDrink)
-            Button(onClick = clearDrinks) {
+            Button(
+                onClick = clearDrinks,
+                Modifier.background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.small
+                )
+            ) {
                 Text(text = "clear all", color = MaterialTheme.colorScheme.onPrimary)
             }
         }

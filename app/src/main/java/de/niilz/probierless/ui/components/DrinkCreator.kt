@@ -1,5 +1,6 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,23 +31,30 @@ fun DrinkCreator(addDrink: (String, String) -> Unit) {
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
-                textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant),
                 modifier = Modifier
                     .fillMaxWidth(0.3f)
-                    .testTag(ICON_INPUT_TAG),
+                    .testTag(ICON_INPUT_TAG)
+                    .background(color = MaterialTheme.colorScheme.surfaceVariant),
                 value = newIcon,
                 onValueChange = { newIcon = it })
             OutlinedTextField(
-                textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag(DRINK_INPUT_TAG),
+                    .testTag(DRINK_INPUT_TAG)
+                    .background(color = MaterialTheme.colorScheme.surfaceVariant),
                 value = newDrink,
                 onValueChange = { newDrink = it })
         }
-        Button(onClick = {
-            addDrink(newDrink, newIcon)
-        }) {
+        Button(
+            onClick = {
+                addDrink(newDrink, newIcon)
+            }, modifier = Modifier.background(
+                MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.small
+            )
+        ) {
             Text(text = "createDrink", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
