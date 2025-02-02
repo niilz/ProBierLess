@@ -33,6 +33,7 @@ class Db {
         } catch (e: BinaryPersistenceException) {
             Log.e(TAG, "Data structure is incompatible. Store gets reset")
             store.setRoot(StoreRoot())
+            store.storeRoot()
         }
 
         val root = store.root()
