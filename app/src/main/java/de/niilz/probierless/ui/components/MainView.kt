@@ -17,13 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.ui.data.Drink
 
 const val DRINK_INPUT_TAG = "drink-input"
 const val ICON_INPUT_TAG = "icon-input"
 
 @Composable
-fun MainView(drinkState: List<Drink>, clearDrinks: () -> Unit, addDrink: (String, String) -> Unit) {
+fun MainView(
+    drinkState: List<Drink>,
+    clearDrinks: () -> Unit,
+    addDrink: (String, String, DrinkSize, Float) -> Unit
+) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

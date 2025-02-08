@@ -33,7 +33,7 @@ class MainViewTest {
     @Test
     fun canAddNewDrinkToUi() {
         // FIXME: Better to have the ViewModel an argument?
-        rule.setContent { MainView(listOf(), {}, { _, _ -> println("not used in test") }) }
+        rule.setContent { MainView(listOf(), {}, { _, _, _, _ -> println("not used in test") }) }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)

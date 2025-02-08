@@ -1,6 +1,7 @@
 package de.niilz.probierless.tracking.viewmodel
 
 import de.niilz.probierless.tracking.dto.DrinkDto
+import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.ui.data.Drink
 import org.junit.Assert.assertEquals
@@ -9,6 +10,8 @@ import org.junit.Test
 
 private const val TEST_DRINK = "test-drink"
 private const val TEST_ICON = "test-icon"
+private val TEST_SIZE = Ml(330)
+private const val TEST_VOL = 4.9f
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -38,18 +41,18 @@ class DrinkStateViewModelTest {
         assertTrue(drinkStateViewModel.drinkState.isEmpty())
 
         // when
-        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON);
+        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL);
 
         // then
         assertEquals(1, drinkStateViewModel.drinkState.size)
         assertEquals(
-            Drink(TEST_DRINK, TEST_ICON),
+            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             drinkStateViewModel.drinkState.get(0)
         )
         val allRepoDrinks = repoMock.fetchAllDrinks();
         assertEquals(1, allRepoDrinks.size)
         assertEquals(
-            DrinkDto(TEST_DRINK, TEST_ICON),
+            DrinkDto(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             allRepoDrinks.get(0)
         )
     }
@@ -58,7 +61,7 @@ class DrinkStateViewModelTest {
     fun clearingRemovesUiAndRepoState() {
         assertTrue(drinkStateViewModel.drinkState.isEmpty())
         // given
-        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON);
+        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL);
         assertEquals(1, drinkStateViewModel.drinkState.size)
 
         // when

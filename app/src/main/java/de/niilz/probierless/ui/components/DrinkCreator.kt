@@ -17,12 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
+import de.niilz.probierless.tracking.dto.DrinkSize
+import de.niilz.probierless.tracking.dto.Ml
 
 @Composable
-fun DrinkCreator(addDrink: (String, String) -> Unit) {
+fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
 
     var newDrink by remember { mutableStateOf("") }
     var newIcon by remember { mutableStateOf("") }
+    var newSize by remember { mutableStateOf("") }
+    var newVol by remember { mutableStateOf("") }
 
 
     Column(
@@ -49,7 +53,8 @@ fun DrinkCreator(addDrink: (String, String) -> Unit) {
         }
         Button(
             onClick = {
-                addDrink(newDrink, newIcon)
+                // FIXME: Assign actual values
+                addDrink(newDrink, newIcon, Ml(330), 5.0f)
             }, modifier = Modifier.background(
                 MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.small

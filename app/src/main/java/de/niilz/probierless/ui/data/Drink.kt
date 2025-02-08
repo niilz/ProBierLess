@@ -1,3 +1,10 @@
 package de.niilz.probierless.ui.data
 
-data class Drink(val name: String, val icon: String)
+import de.niilz.probierless.tracking.dto.DrinkSize
+
+data class Drink(
+    val name: String,
+    val icon: String,
+    val drinkSize: DrinkSize,
+    val vol: Float
+)
