@@ -2,6 +2,7 @@ package de.niilz.probierless.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -34,6 +35,11 @@ fun DrinkCounter(name: String, icon: String, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // FIXME: Get the real values for size and vol
+            Row {
+                Text(text = "330ml")
+                Text(text = "4.9")
+            }
             Text(
                 text = icon,
                 modifier = modifier.padding(10.dp),
