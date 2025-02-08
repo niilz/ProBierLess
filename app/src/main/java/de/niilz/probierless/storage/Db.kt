@@ -40,6 +40,7 @@ class Db {
         if (root == null) {
             Log.d(TAG, "Root is null! Setting a new StoreRoot")
             store.setRoot(StoreRoot())
+            store.storeRoot()
         } else {
             Log.d(TAG, "Root store is already present, launching existing store")
         }
