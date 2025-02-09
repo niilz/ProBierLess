@@ -46,10 +46,7 @@ fun MainView(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(drinks) { drink ->
-                    DrinkCounter(
-                        name = drink.name,
-                        icon = drink.icon,
-                    )
+                    DrinkCounter(drink)
                 }
             }
             DrinkCreator(addDrink)

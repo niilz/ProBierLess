@@ -15,9 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import de.niilz.probierless.ui.data.Drink
 
 @Composable
-fun DrinkCounter(name: String, icon: String, modifier: Modifier = Modifier) {
+fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
     Card(
         onClick = { println("clicked") },
         colors = CardColors(
@@ -37,15 +38,15 @@ fun DrinkCounter(name: String, icon: String, modifier: Modifier = Modifier) {
         ) {
             // FIXME: Get the real values for size and vol
             Row {
-                Text(text = "330ml")
-                Text(text = "4.9")
+                Text(text = drink.drinkSize.toString())
+                Text(text = drink.vol.toString())
             }
             Text(
-                text = icon,
+                text = drink.icon,
                 modifier = modifier.padding(10.dp),
                 fontSize = TextUnit(40f, TextUnitType.Sp)
             )
-            Text(text = name, modifier = modifier, fontSize = TextUnit(20f, TextUnitType.Sp))
+            Text(text = drink.name, modifier = modifier, fontSize = TextUnit(20f, TextUnitType.Sp))
         }
     }
 }

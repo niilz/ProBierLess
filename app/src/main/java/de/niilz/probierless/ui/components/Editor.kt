@@ -10,9 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import de.niilz.probierless.tracking.dto.DrinkSize
-import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.components.common.Input
+import de.niilz.probierless.ui.mapper.fromUi
 
 private const val DRINK_INPUT_TAG = "drink-input"
 private const val ICON_INPUT_TAG = "icon-input"
@@ -37,21 +38,30 @@ fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Input({ newIcon = it }, Modifier.fillMaxWidth(0.3f), ICON_INPUT_TAG)
             Input({ newDrink = it }, testTagName = DRINK_INPUT_TAG)
-            Input({ newSize = it }, testTagName = SIZE_INPUT_TAG)
-            // FIXME: Replace with dropdown
         }
         Row(modifier = Modifier.fillMaxWidth()) {
             Input(
+                { newSize = it },
+                keyboardType = KeyboardType.Number,
+                modifier = Modifier.fillMaxWidth(.3f),
+                testTagName = SIZE_INPUT_TAG
+            )
+            // FIXME: Replace with dropdown
+            Input(
                 { newSizeType = it },
-                Modifier.fillMaxWidth(0.5f),
+                modifier = Modifier.fillMaxWidth(0.3f),
                 testTagName = SIZE_TYPE_INPUT_TAG
             )
-            Input({ newVol = it }, testTagName = VOL_INPUT_TAG)
+            Input(
+                { newVol = it },
+                keyboardType = KeyboardType.Decimal,
+                testTagName = VOL_INPUT_TAG
+            )
         }
         Button(
             onClick = {
                 // FIXME: Assign actual values
-                addDrink(newDrink, newIcon, Ml(330), 5.0f)
+                addDrink(newDrink, newIcon, fromUi(newSize, newSizeType), newVol.toFloat())
             }, modifier = Modifier.background(
                 MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.small
