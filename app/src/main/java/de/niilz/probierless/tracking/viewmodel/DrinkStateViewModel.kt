@@ -21,12 +21,11 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
         this.drinkState.addAll(drinkState)
     }
 
-    fun addDrink(newDrink: String, newDrinkIcon: String?, drinkSize: DrinkSize, vol: Float) {
-        val drink = Drink(newDrink, newDrinkIcon ?: "$newDrink-icon", drinkSize, vol)
+    fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
-        drinkState.add(drink)
+        drinkState.add(newDrink)
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
-        drinkRepository.addDrink(fromUi(drink))
+        drinkRepository.addDrink(fromUi(newDrink))
     }
 
     fun clearDrinks() {

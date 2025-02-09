@@ -17,19 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.ui.data.Drink
 
 @Composable
 fun MainView(
     drinkState: List<Drink>,
     clearDrinks: () -> Unit,
-    addDrink: (String, String, DrinkSize, Float) -> Unit
+    addDrink: (Drink) -> Unit
 ) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -49,7 +48,7 @@ fun MainView(
                     DrinkCounter(drink)
                 }
             }
-            DrinkCreator(addDrink)
+            Editor(addDrink)
             Button(
                 onClick = clearDrinks,
                 Modifier.background(

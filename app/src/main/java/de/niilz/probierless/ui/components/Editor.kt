@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.ui.components.common.Input
+import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi
 
 private const val DRINK_INPUT_TAG = "drink-input"
@@ -22,14 +23,13 @@ private const val SIZE_TYPE_INPUT_TAG = "size-type-input"
 private const val VOL_INPUT_TAG = "vol-input"
 
 @Composable
-fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
+fun Editor(addDrink: (Drink) -> Unit) {
 
     var newDrink = ""
     var newIcon = ""
     var newSize = ""
     var newSizeType = ""
     var newVol = ""
-
 
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
@@ -63,14 +63,22 @@ fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
         }
         Button(
             onClick = {
-                // FIXME: Assign actual values
-                addDrink(newDrink, newIcon, fromUi(newSize, newSizeType), newVol.toFloat())
-            }, modifier = Modifier.background(
-                MaterialTheme.colorScheme.primary,
-                shape = MaterialTheme.shapes.small
-            )
+                val drinkSize = fromUi(newSize, newSizeType)
+                drinkSize.onSuccess {
+                    val drink = Drink(newDrink, newIcon, it, newVol.toFloat())
+                    addDrink(drink)
+                }
+                drinkSize.onFailure {
+                }
+            },
+            modifier = Modifier
+                .background(
+                    MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.small
+                )
+                .testTag(ADD_BUTTON_TAG),
         ) {
-            Text(text = "createDrink", color = MaterialTheme.colorScheme.onPrimary)
+            Text(text = "add", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }

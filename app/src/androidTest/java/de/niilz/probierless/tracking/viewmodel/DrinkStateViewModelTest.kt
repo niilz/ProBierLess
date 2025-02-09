@@ -41,7 +41,8 @@ class DrinkStateViewModelTest {
         assertTrue(drinkStateViewModel.drinkState.isEmpty())
 
         // when
-        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL);
+        val newDrink = Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL);
+        drinkStateViewModel.addDrink(newDrink);
 
         // then
         assertEquals(1, drinkStateViewModel.drinkState.size)
@@ -61,7 +62,8 @@ class DrinkStateViewModelTest {
     fun clearingRemovesUiAndRepoState() {
         assertTrue(drinkStateViewModel.drinkState.isEmpty())
         // given
-        drinkStateViewModel.addDrink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL);
+        val newDrink = Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL)
+        drinkStateViewModel.addDrink(newDrink);
         assertEquals(1, drinkStateViewModel.drinkState.size)
 
         // when

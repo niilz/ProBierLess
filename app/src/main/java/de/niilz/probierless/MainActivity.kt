@@ -55,7 +55,7 @@ fun GreetingPreview() {
         MainView(
             listOf(),
             {},
-            { _, _, _, _ -> println("Not used in preview") }
+            { _ -> println("Not used in preview") }
         )
     }
 }
