@@ -36,11 +36,12 @@ fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Input({ newIcon = it }, Modifier.fillMaxWidth(0.3f), ICON_INPUT_TAG)
-            Input({ newDrink = it }, testTagName = DRINK_INPUT_TAG)
+            Input("Icon", { newIcon = it }, Modifier.fillMaxWidth(0.3f), ICON_INPUT_TAG)
+            Input("Getränkename", { newDrink = it }, testTagName = DRINK_INPUT_TAG)
         }
         Row(modifier = Modifier.fillMaxWidth()) {
             Input(
+                "Menge",
                 { newSize = it },
                 keyboardType = KeyboardType.Number,
                 modifier = Modifier.fillMaxWidth(.3f),
@@ -48,11 +49,13 @@ fun DrinkCreator(addDrink: (String, String, DrinkSize, Float) -> Unit) {
             )
             // FIXME: Replace with dropdown
             Input(
+                "Einheit",
                 { newSizeType = it },
-                modifier = Modifier.fillMaxWidth(0.3f),
+                modifier = Modifier.fillMaxWidth(.5f),
                 testTagName = SIZE_TYPE_INPUT_TAG
             )
             Input(
+                "vol.%",
                 { newVol = it },
                 keyboardType = KeyboardType.Decimal,
                 testTagName = VOL_INPUT_TAG
