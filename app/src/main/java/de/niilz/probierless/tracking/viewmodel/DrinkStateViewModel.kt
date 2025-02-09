@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.niilz.probierless.MainActivity
-import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi

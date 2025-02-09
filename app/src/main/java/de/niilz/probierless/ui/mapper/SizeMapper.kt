@@ -5,12 +5,16 @@ import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.tracking.dto.L
 import de.niilz.probierless.tracking.dto.Ml
 
-fun fromUi(size: String, type: String): DrinkSize {
+fun fromUi(size: String, type: String): Result<DrinkSize> {
     val sizeCleaned = size.trim().replace(",", ".")
-    return when (type.lowercase()) {
-        "ml" -> Ml(sizeCleaned.toInt())
-        "cl" -> Cl(sizeCleaned.toInt())
-        "l" -> L(sizeCleaned.toFloat())
-        else -> throw IllegalArgumentException("Invalid drink-size-type: $size")
+    try {
+        return when (type.lowercase()) {
+            "ml" -> Result.success(Ml(sizeCleaned.toInt()))
+            "cl" -> Result.success(Cl(sizeCleaned.toInt()))
+            "l" -> Result.success(L(sizeCleaned.toFloat()))
+            else -> Result.failure(IllegalArgumentException("Unsupported drink-size-type: $type"))
+        }
+    } catch (e: NumberFormatException) {
+        return Result.failure(e)
     }
 }

@@ -10,17 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
-import de.niilz.probierless.tracking.dto.DrinkSize
 import de.niilz.probierless.ui.components.common.Input
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi
 
-private const val DRINK_INPUT_TAG = "drink-input"
-private const val ICON_INPUT_TAG = "icon-input"
-private const val SIZE_INPUT_TAG = "size-input"
-private const val SIZE_TYPE_INPUT_TAG = "size-type-input"
-private const val VOL_INPUT_TAG = "vol-input"
+const val DRINK_INPUT_TAG = "drink-input"
+const val ICON_INPUT_TAG = "icon-input"
+const val SIZE_INPUT_TAG = "size-input"
+const val SIZE_TYPE_INPUT_TAG = "size-type-input"
+const val VOL_INPUT_TAG = "vol-input"
+const val ADD_BUTTON_TAG = "add-button-input"
 
 @Composable
 fun Editor(addDrink: (Drink) -> Unit) {
