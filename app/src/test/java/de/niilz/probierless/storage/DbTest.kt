@@ -1,6 +1,7 @@
 package de.niilz.probierless.storage
 
 import de.niilz.probierless.storage.entity.DrinkEntity
+import de.niilz.probierless.tracking.dto.Ml
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 import org.junit.AfterClass
 import org.junit.Assert.assertEquals
@@ -31,7 +32,7 @@ class DbTest {
             store.setRoot(storeRoot)
             store.storeRoot()
 
-            storeRoot.drinks.add(DrinkEntity("foo", "icon"))
+            storeRoot.drinks.add(DrinkEntity("foo", "icon", Ml(330), 4.9f))
             store.store(storeRoot.drinks)
 
             store.shutdown()
