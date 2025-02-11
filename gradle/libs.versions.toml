@@ -1,6 +1,6 @@
 [versions]
 agp = "8.8.0"
-kotlin = "1.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -11,6 +11,7 @@ viewmodelCompose = "2.8.7"
 navigationCompose = "2.8.6"
 composeBom = "2025.01.01"
 eclipseStore = "2.1.0"
+coroutineTest = "1.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,7 +32,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 eclipse-store-storage-embedded = { group = "org.eclipse.store", name = "storage-embedded", version.ref = "eclipseStore" }
 eclipse-store-storage-embedded-configuration = { group = "org.eclipse.store", name = "storage-embedded-configuration", version.ref = "eclipseStore" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineTest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

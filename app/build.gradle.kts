@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -71,6 +72,9 @@ dependencies {
 
     // TEST
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutine.test)
+
+    // ANDROID TEST
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
