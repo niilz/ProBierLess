@@ -39,6 +39,8 @@ fun MainView(
         containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
+        // FIXME: Apparently not lifecycle aware
+        // TODO: Add integration test
         LaunchedEffect(key1 = true) {
             ErrorSnackBarHub.errors.collect {
                 snackbarHostState.showSnackbar(it)
