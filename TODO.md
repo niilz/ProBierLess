@@ -1,6 +1,7 @@
 # TODO
 
-- Define a global SnackbarController that deals with UserError (from Exceptions)
+- Make SnackBarHost lifecycle aware
+- Write integration test for error in MainView
 - Flesh out EditorTest to check
   - Exception is cought and SnackBar is present
   - If all is good (e.g. vol is a number) -> mapping to Ml/Cl/L works
