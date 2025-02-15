@@ -5,10 +5,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.cross.ErrorSnackBarHub
+import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,26 +21,23 @@ class EditorTest {
     val rule = createComposeRule()
 
     @Test
-    fun insertNonNumberForDrinkSizeThrows() {
+    fun insertNonNumberForDrinkSizeThrows() = runTest {
         // given
-        lateinit var drink: Drink
-        rule.setContent { Editor({ d -> drink = d }) }
+        rule.setContent { Editor {} }
 
         val sizeInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
         sizeInput.assertExists()
-        sizeInput.performTextInput("NaN")
+        val sizeType = rule.onNodeWithTag(SIZE_TYPE_INPUT_TAG)
+        sizeType.assertExists()
 
         // when
-        // FIXME: Instead show a toast and check that toast is shown
-        try {
-            val createButton = rule.onNodeWithTag(ADD_BUTTON_TAG)
-            createButton.performClick()
-            fail("NaN drink sizes should throw")
-        } catch (e: IllegalArgumentException) {
-            // then
-            assertNotNull(e)
-            assertEquals("Foo", e.message)
-        }
-        fail("NaN drink sizes should throw IllegalArgumentException")
+        sizeType.performTextInput("ml")
+        sizeInput.performTextInput("NaN")
+        val createButton = rule.onNodeWithTag(ADD_BUTTON_TAG)
+        createButton.performClick()
+
+        // then
+        val error = ErrorSnackBarHub.errors.first()
+        assertEquals("$illegalDrinkSizeNaNErrorTemplate NaN", error)
     }
 }

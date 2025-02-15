@@ -8,13 +8,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
+import de.niilz.probierless.cross.ErrorSnackBarHub
 import de.niilz.probierless.ui.components.common.Input
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi
+import kotlinx.coroutines.launch
 
 const val DRINK_INPUT_TAG = "drink-input"
 const val ICON_INPUT_TAG = "icon-input"
@@ -31,6 +34,8 @@ fun Editor(addDrink: (Drink) -> Unit) {
     var newSize = ""
     var newSizeType = ""
     var newVol = ""
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.fillMaxWidth(0.8f),
@@ -70,6 +75,9 @@ fun Editor(addDrink: (Drink) -> Unit) {
                     addDrink(drink)
                 }
                 drinkSize.onFailure {
+                    scope.launch {
+                        ErrorSnackBarHub.addError(it.message ?: "no-message")
+                    }
                 }
             },
             modifier = Modifier
