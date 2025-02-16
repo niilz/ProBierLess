@@ -39,7 +39,7 @@ fun MainView(
         containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
-        // TODO: Add integration test
+       
         ObserveSnackBarErrors(ErrorSnackBarHub.errors, snackbarHostState) { errorEvent ->
             scope.launch {
                 // Should not happen, but who knows
