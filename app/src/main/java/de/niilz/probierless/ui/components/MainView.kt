@@ -16,7 +16,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.niilz.probierless.cross.ErrorSnackBarHub
 import de.niilz.probierless.ui.data.Drink
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainView(
@@ -39,11 +39,12 @@ fun MainView(
         containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
-        // FIXME: Apparently not lifecycle aware
         // TODO: Add integration test
-        LaunchedEffect(key1 = true) {
-            ErrorSnackBarHub.errors.collect {
-                snackbarHostState.showSnackbar(it)
+        ObserveSnackBarErrors(ErrorSnackBarHub.errors, snackbarHostState) { errorEvent ->
+            scope.launch {
+                // Should not happen, but who knows
+                snackbarHostState.currentSnackbarData?.dismiss()
+                snackbarHostState.showSnackbar(errorEvent)
             }
         }
         Column(
