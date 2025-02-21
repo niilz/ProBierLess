@@ -9,8 +9,11 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
+import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,6 +35,11 @@ class MainViewTest {
     @get:Rule
     val rule = createComposeRule()
 
+    @Before
+    fun setup() {
+        DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
+    }
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -41,7 +49,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        rule.setContent { MainView(listOf(), {}, { _ -> println("not used in test") }) }
+        rule.setContent { MainView() }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
@@ -55,7 +63,7 @@ class MainViewTest {
         iconInput.performTextInput(appleEmoji)
 
         // When
-        rule.onNodeWithText("createDrink").performClick()
+        rule.onNodeWithText("add").performClick()
 
         // Then
         rule.onNodeWithText("Apfel").assertExists()
@@ -65,7 +73,7 @@ class MainViewTest {
     @Test
     fun invalidDrinkAmountInputShowsUserErrors() {
         // given
-        rule.setContent { MainView(listOf(), {}, { _ -> println("not used in test") }) }
+        rule.setContent { MainView() }
         fillAllInputs()
 
         // when

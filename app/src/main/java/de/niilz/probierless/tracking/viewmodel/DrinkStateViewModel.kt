@@ -1,24 +1,18 @@
 package de.niilz.probierless.tracking.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import de.niilz.probierless.MainActivity
-import de.niilz.probierless.tracking.repository.DrinkRepository
+import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi
 import de.niilz.probierless.ui.mapper.toUi
 
-class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewModel() {
-    val drinkState = mutableStateListOf<Drink>()
+class DrinkStateViewModel : ViewModel() {
 
-    fun init(drinkState: List<Drink>) {
-        this.drinkState.addAll(drinkState)
-    }
+    private val drinkRepository = DrinkRepositoryProvider.getRepository()
+
+    val drinkState = drinkRepository.fetchAllDrinks().map { toUi(it) }.toMutableStateList()
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
@@ -33,18 +27,6 @@ class DrinkStateViewModel(private val drinkRepository: DrinkRepository) : ViewMo
     }
 
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val drinkRepository =
-                    (this[VIEW_MODEL_STORE_OWNER_KEY] as MainActivity).drinkRepository
-                val drinkStateViewModel = DrinkStateViewModel(drinkRepository)
-                val allDrinks = drinkRepository.fetchAllDrinks().map {
-                    toUi(it)
-                }
-                drinkStateViewModel.init(allDrinks)
-                drinkStateViewModel
-            }
-        }
         private val TAG: String = DrinkStateViewModel::class.java.simpleName
     }
 }

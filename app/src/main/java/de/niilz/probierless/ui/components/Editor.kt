@@ -27,7 +27,7 @@ const val VOL_INPUT_TAG = "vol-input"
 const val ADD_BUTTON_TAG = "add-button-input"
 
 @Composable
-fun Editor(addDrink: (Drink) -> Unit) {
+fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit) {
 
     var newDrink = ""
     var newIcon = ""
@@ -88,6 +88,15 @@ fun Editor(addDrink: (Drink) -> Unit) {
                 .testTag(ADD_BUTTON_TAG),
         ) {
             Text(text = "add", color = MaterialTheme.colorScheme.onPrimary)
+        }
+        Button(
+            onClick = clearDrinks,
+            Modifier.background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.small
+            )
+        ) {
+            Text(text = "clear all", color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }
