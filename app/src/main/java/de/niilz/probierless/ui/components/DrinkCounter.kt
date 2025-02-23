@@ -36,7 +36,6 @@ fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // FIXME: Get the real values for size and vol
             Row {
                 Text(text = drink.drinkSize.toString())
                 Text(text = drink.vol.toString())

@@ -50,7 +50,7 @@ fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(.3f),
                 testTagName = SIZE_INPUT_TAG
             )
-            // FIXME: Replace with dropdown
+            // TODO: Replace with dropdown
             MyInput(
                 "Einheit",
                 { newSizeType = it },
