@@ -7,10 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.ui.components.MainView
+import de.niilz.probierless.ui.navigation.EditorRoute
+import de.niilz.probierless.ui.navigation.MainViewRoute
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,10 +30,24 @@ class MainActivity : ComponentActivity() {
 
         DrinkRepositoryProvider.init(DrinkRepositoryImpl(db.store))
 
+
         enableEdgeToEdge()
         setContent {
+
             ProBierLessTheme {
-                MainView()
+                val navConrtoller = rememberNavController()
+                NavHost(navController = navConrtoller, startDestination = MainViewRoute) {
+                    composable<MainViewRoute> {
+                        MainView(
+                            navigation = { navConrtoller.navigate(route = EditorRoute) }
+                        )
+                    }
+                    composable<EditorRoute> {
+                        MainView(
+                            editable = true,
+                            { navConrtoller.navigate(route = MainViewRoute) })
+                    }
+                }
             }
         }
     }
@@ -42,7 +61,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     ProBierLessTheme {
-        MainView()
+        MainView(navigation = {})
     }
 }
 

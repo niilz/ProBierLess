@@ -24,7 +24,7 @@ const val VOL_INPUT_TAG = "vol-input"
 const val ADD_BUTTON_TAG = "add-button-input"
 
 @Composable
-fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit) {
+fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit, navigateToMainView: () -> Unit) {
 
     var newDrink = ""
     var newIcon = ""
@@ -78,5 +78,6 @@ fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit) {
         }
         MyButton("add", { addDrinkButtonHandler() }, Modifier.testTag(ADD_BUTTON_TAG))
         MyButton("clear all", clearDrinks)
+        MyButton("Close Editor", navigateToMainView)
     }
 }

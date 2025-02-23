@@ -16,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.cross.ErrorSnackBarHub
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
+import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.data.Drink
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainView() {
+fun MainView(editable: Boolean = false, navigation: () -> Unit) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
 
@@ -49,10 +50,15 @@ fun MainView() {
         ) {
             val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
             DrinkGrid(drinks)
-            Editor(
-                drinkStateViewModel::addDrink,
-                drinkStateViewModel::clearDrinks
-            )
+            if (editable) {
+                Editor(
+                    drinkStateViewModel::addDrink,
+                    drinkStateViewModel::clearDrinks,
+                    navigateToMainView = navigation
+                )
+            } else {
+                MyButton("edit cards", navigation)
+            }
         }
     }
 }
