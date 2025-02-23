@@ -26,6 +26,7 @@ fun MainView() {
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.background,
@@ -48,7 +49,10 @@ fun MainView() {
         ) {
             val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
             DrinkGrid(drinks)
-            Editor(drinkStateViewModel::addDrink, drinkStateViewModel::clearDrinks)
+            Editor(
+                drinkStateViewModel::addDrink,
+                drinkStateViewModel::clearDrinks
+            )
         }
     }
 }
