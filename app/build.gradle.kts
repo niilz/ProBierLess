@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -65,6 +66,7 @@ dependencies {
     // compose
     implementation(libs.androidx.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
     // EclipseStore
     implementation(libs.eclipse.store.storage.embedded)
