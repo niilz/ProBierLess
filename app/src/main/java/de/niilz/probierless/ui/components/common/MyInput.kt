@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun Input(
+fun MyInput(
     label: String = "",
     onUpdate: (String) -> Unit,
     modifier: Modifier = Modifier,
