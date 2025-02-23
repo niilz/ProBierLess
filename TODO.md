@@ -1,10 +1,10 @@
 # TODO
 
-- Add navigation between main view and "editor"
-- Have a drop-down for the Size-Types (Ml/Cl/L) and derive the keyboard for it
-- Make all texts english
-- Replace hard-coded text sizes with Material.typography
+- enlarge input text-size
+- revisit colors
 - Make Input-Labels monospace and generally nicer
+- Have a drop-down for the Size-Types (Ml/Cl/L) and derive the keyboard for it
+- Replace hard-coded text sizes with Material.typography
 - Abstract the Logger
 - Add more logging
 - Figure out Material-Theme-Handling for Shapes
