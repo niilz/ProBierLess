@@ -45,11 +45,13 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
+
             DrinkGrid(drinks)
+
             if (editable) {
                 Editor(
                     drinkStateViewModel::addDrink,
@@ -57,7 +59,7 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
                     navigateToMainView = navigation
                 )
             } else {
-                MyButton("edit cards", navigation)
+                MyButton("Anpassen", navigation)
             }
         }
     }
