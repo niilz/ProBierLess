@@ -23,7 +23,7 @@ class EditorTest {
     @Test
     fun insertNonNumberForDrinkSizeThrows() = runTest {
         // given
-        rule.setContent { Editor({}, {}) }
+        rule.setContent { Editor({}, {}, {}) }
 
         val sizeInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
         sizeInput.assertExists()

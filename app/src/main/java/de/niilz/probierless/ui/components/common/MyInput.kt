@@ -1,6 +1,7 @@
 package de.niilz.probierless.ui.components.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -12,15 +13,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 @Composable
 fun MyInput(
+    modifier: Modifier = Modifier,
     label: String = "",
     onUpdate: (String) -> Unit,
-    modifier: Modifier = Modifier,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    textStyle: TextStyle = MaterialTheme.typography.displayMedium,
     testTagName: String = "",
-    keyboardType: KeyboardType = KeyboardType.Text
 ) {
 
     var value by remember { mutableStateOf("") }
@@ -29,7 +34,7 @@ fun MyInput(
         label = { Text(label) },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         value = value,
-        textStyle = MaterialTheme.typography.bodyLarge,
+        textStyle = textStyle,
         modifier = modifier
             .testTag(testTagName)
             .background(color = MaterialTheme.colorScheme.surfaceVariant),
@@ -38,4 +43,15 @@ fun MyInput(
             onUpdate(value)
         }
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppPreview() {
+    ProBierLessTheme {
+        Column {
+            MyInput(onUpdate = {})
+            MyInput(label = "Label", onUpdate = {})
+        }
+    }
 }

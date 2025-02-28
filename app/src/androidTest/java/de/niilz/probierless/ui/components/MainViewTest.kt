@@ -49,7 +49,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        rule.setContent { MainView() }
+        rule.setContent { MainView(true, {}) }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
@@ -73,7 +73,7 @@ class MainViewTest {
     @Test
     fun invalidDrinkAmountInputShowsUserErrors() {
         // given
-        rule.setContent { MainView() }
+        rule.setContent { MainView(true, {}) }
         fillAllInputs()
 
         // when

@@ -6,18 +6,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.niilz.probierless.cross.ErrorSnackBarHub
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.components.common.MyInput
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.fromUi
+import de.niilz.probierless.ui.theme.ProBierLessTheme
 import kotlinx.coroutines.launch
 
 const val DRINK_INPUT_TAG = "drink-input"
@@ -28,7 +32,12 @@ const val VOL_INPUT_TAG = "vol-input"
 const val ADD_BUTTON_TAG = "add-button-input"
 
 @Composable
-fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit, navigateToMainView: () -> Unit) {
+fun Editor(
+    addDrink: (Drink) -> Unit,
+    clearDrinks: () -> Unit,
+    navigateToMainView: () -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     var newDrink = ""
     var newIcon = ""
@@ -47,15 +56,25 @@ fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit, navigateToMainVie
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                MyInput("Icon", { newIcon = it }, Modifier.fillMaxWidth(0.3f), ICON_INPUT_TAG)
-                MyInput("Getränkename", { newDrink = it }, testTagName = DRINK_INPUT_TAG)
+                MyInput(
+                    Modifier.fillMaxWidth(0.3f),
+                    "Icon",
+                    { newIcon = it },
+                    textStyle = MaterialTheme.typography.displayLarge,
+                    testTagName = ICON_INPUT_TAG
+                )
+                MyInput(
+                    label = "Getränkename",
+                    onUpdate = { newDrink = it },
+                    testTagName = DRINK_INPUT_TAG
+                )
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 MyInput(
+                    modifier = Modifier.fillMaxWidth(.3f),
                     "Menge",
                     { newSize = it },
                     keyboardType = KeyboardType.Number,
-                    modifier = Modifier.fillMaxWidth(.3f),
                     testTagName = SIZE_INPUT_TAG
                 )
                 // TODO: Replace with dropdown
@@ -63,14 +82,14 @@ fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit, navigateToMainVie
 
                 }
                 MyInput(
+                    modifier = Modifier.fillMaxWidth(.5f),
                     "Einheit",
                     { newSizeType = it },
-                    modifier = Modifier.fillMaxWidth(.5f),
                     testTagName = SIZE_TYPE_INPUT_TAG
                 )
                 MyInput(
-                    "vol.%",
-                    { newVol = it },
+                    label = "vol.%",
+                    onUpdate = { newVol = it },
                     keyboardType = KeyboardType.Decimal,
                     testTagName = VOL_INPUT_TAG
                 )
@@ -99,5 +118,15 @@ fun Editor(addDrink: (Drink) -> Unit, clearDrinks: () -> Unit, navigateToMainVie
             }
         }
         MyButton("Home", navigateToMainView)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppPreview() {
+    ProBierLessTheme {
+        Scaffold { padding ->
+            Editor({}, {}, {}, Modifier.padding(padding))
+        }
     }
 }
