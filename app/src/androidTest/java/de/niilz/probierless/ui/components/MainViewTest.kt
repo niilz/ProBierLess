@@ -80,7 +80,7 @@ class MainViewTest {
         val amountInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
         amountInput.performTextClearance()
         amountInput.performTextInput("NaN")
-        rule.onNodeWithText("add").performClick()
+        rule.onNodeWithText("Hinzufügen").performClick()
 
         // then
         val errorSnackBar = rule.onNodeWithText("Drink-Size", substring = true)
