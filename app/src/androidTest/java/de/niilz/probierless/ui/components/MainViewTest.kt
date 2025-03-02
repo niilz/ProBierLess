@@ -63,7 +63,7 @@ class MainViewTest {
         iconInput.performTextInput(appleEmoji)
 
         // When
-        rule.onNodeWithText("add").performClick()
+        rule.onNodeWithText(ADD_TEXT).performClick()
 
         // Then
         rule.onNodeWithText("Apfel").assertExists()
@@ -80,7 +80,7 @@ class MainViewTest {
         val amountInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
         amountInput.performTextClearance()
         amountInput.performTextInput("NaN")
-        rule.onNodeWithText("Hinzufügen").performClick()
+        rule.onNodeWithText(ADD_TEXT).performClick()
 
         // then
         val errorSnackBar = rule.onNodeWithText("Drink-Size", substring = true)
@@ -100,5 +100,9 @@ class MainViewTest {
         unitInput.performTextInput(testUnit)
         val volInput = rule.onNodeWithTag(VOL_INPUT_TAG)
         volInput.performTextInput(testVol)
+    }
+
+    companion object {
+        private const val ADD_TEXT = "Hinzufügen"
     }
 }
