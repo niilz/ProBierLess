@@ -17,9 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.cross.ErrorSnackBarHub
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
-import de.niilz.probierless.tracking.dto.DrinkDto
-import de.niilz.probierless.tracking.repository.DrinkRepository
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.data.Drink
@@ -54,7 +51,7 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinks: List<Drink> = drinkStateViewModel.drinkState.toList()
+            val drinks: List<Drink> = drinkStateViewModel.drinkState.orEmpty()
 
             DrinkGrid(drinks)
 

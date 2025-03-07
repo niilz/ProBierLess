@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.tracking.dto.DrinkDto
@@ -63,7 +64,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
-    initDrinkRepositoryForPreview()
+    addDrinks(3)
     ProBierLessTheme {
         MainView(true, navigation = {})
     }
