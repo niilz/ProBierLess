@@ -33,47 +33,50 @@ class DrinkStateViewModelTest {
 
     @Test
     fun drinkStateModelIsEmptyAtTheBeginning() {
-        assertTrue(drinkStateViewModel.drinkState.isEmpty())
+        assertTrue(drinkStateViewModel.drinkState?.isEmpty() ?: false)
     }
 
     @Test
     fun drinkStateModelHoldsValueAfterInsert() {
-        assertTrue(drinkStateViewModel.drinkState.isEmpty())
+        assertTrue(drinkStateViewModel.drinkState?.isEmpty() ?: false)
 
         // when
         val newDrink = Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL)
         drinkStateViewModel.addDrink(newDrink);
 
         // then
-        assertEquals(1, drinkStateViewModel.drinkState.size)
+        assertEquals(1, drinkStateViewModel.drinkState?.size)
         assertEquals(
             Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
-            drinkStateViewModel.drinkState.get(0)
+            drinkStateViewModel.drinkState?.get(0)
         )
-        val allRepoDrinks = DrinkRepositoryProvider.getRepository().fetchAllDrinks();
-        assertEquals(1, allRepoDrinks.size)
+        val allRepoDrinks = DrinkRepositoryProvider.getRepository()?.fetchAllDrinks();
+        assertEquals(1, allRepoDrinks?.size)
         assertEquals(
             DrinkDto(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
-            allRepoDrinks.get(0)
+            allRepoDrinks?.get(0)
         )
     }
 
     @Test
     fun clearingRemovesUiAndRepoState() {
-        assertTrue(drinkStateViewModel.drinkState.isEmpty())
+        assertTrue(drinkStateViewModel.drinkState?.isEmpty() ?: false)
         // given
         val newDrink = Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL)
         drinkStateViewModel.addDrink(newDrink);
-        assertEquals(1, drinkStateViewModel.drinkState.size)
+        assertEquals(1, drinkStateViewModel.drinkState?.size)
 
         // when
         drinkStateViewModel.clearDrinks()
 
         // then
-        assertTrue("viewmodel-state should be empty", drinkStateViewModel.drinkState.isEmpty())
+        assertTrue(
+            "viewmodel-state should be empty",
+            drinkStateViewModel.drinkState?.isEmpty() ?: false
+        )
         assertTrue(
             "repo should be empty",
-            DrinkRepositoryProvider.getRepository().fetchAllDrinks().isEmpty()
+            DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()?.isEmpty() ?: false
         )
     }
 }
