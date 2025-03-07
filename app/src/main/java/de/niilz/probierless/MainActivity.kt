@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.tracking.dto.DrinkDto
 import de.niilz.probierless.tracking.repository.DrinkRepository
@@ -62,19 +63,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
-    DrinkRepositoryProvider.init(object : DrinkRepository {
-        override fun fetchAllDrinks(): List<DrinkDto> {
-            return emptyList()
-        }
-
-        override fun addDrink(drink: DrinkDto) {
-            TODO("Not yet implemented")
-        }
-
-        override fun clearAllDrinks() {
-            TODO("Not yet implemented")
-        }
-    })
+    initDrinkRepositoryForPreview()
     ProBierLessTheme {
         MainView(true, navigation = {})
     }

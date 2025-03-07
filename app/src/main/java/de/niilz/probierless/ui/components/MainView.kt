@@ -13,11 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.cross.ErrorSnackBarHub
+import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
+import de.niilz.probierless.tracking.dto.DrinkDto
+import de.niilz.probierless.tracking.repository.DrinkRepository
+import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.theme.ProBierLessTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -64,3 +70,13 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun MainViewPreview() {
+    initDrinkRepositoryForPreview()
+    ProBierLessTheme {
+        MainView(true, navigation = {})
+    }
+}
+
