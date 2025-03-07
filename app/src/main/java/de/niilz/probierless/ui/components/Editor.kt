@@ -1,11 +1,15 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -55,15 +59,20 @@ fun Editor(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically) {
                 MyInput(
-                    Modifier.fillMaxWidth(0.3f),
+                    Modifier
+                        .fillMaxWidth(0.3f)
+                        .fillMaxHeight(0.1f),
                     "Icon",
                     { newIcon = it },
                     textStyle = MaterialTheme.typography.displayLarge,
                     testTagName = ICON_INPUT_TAG
                 )
                 MyInput(
+                    Modifier.fillMaxHeight(0.1f),
                     label = "Getränkename",
                     onUpdate = { newDrink = it },
                     testTagName = DRINK_INPUT_TAG
@@ -78,9 +87,6 @@ fun Editor(
                     testTagName = SIZE_INPUT_TAG
                 )
                 // TODO: Replace with dropdown
-                Column {
-
-                }
                 MyInput(
                     modifier = Modifier.fillMaxWidth(.5f),
                     "Einheit",
