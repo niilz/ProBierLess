@@ -64,15 +64,13 @@ fun Editor(
                 verticalAlignment = Alignment.CenterVertically) {
                 MyInput(
                     Modifier
-                        .fillMaxWidth(0.3f)
-                        .fillMaxHeight(0.1f),
+                        .fillMaxWidth(0.3f),
                     "Icon",
                     { newIcon = it },
                     textStyle = MaterialTheme.typography.displayLarge,
                     testTagName = ICON_INPUT_TAG
                 )
                 MyInput(
-                    Modifier.fillMaxHeight(0.1f),
                     label = "Getränkename",
                     onUpdate = { newDrink = it },
                     testTagName = DRINK_INPUT_TAG
