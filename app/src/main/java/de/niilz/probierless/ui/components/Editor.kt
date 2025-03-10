@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,10 +38,10 @@ const val ADD_BUTTON_TAG = "add-button-input"
 
 @Composable
 fun Editor(
+    modifier: Modifier = Modifier,
     addDrink: (Drink) -> Unit,
     clearDrinks: () -> Unit,
     navigateToMainView: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     var newDrink = ""
@@ -52,9 +53,7 @@ fun Editor(
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth(0.8f)
-            .fillMaxHeight(),
+        modifier = modifier,
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -77,28 +76,35 @@ fun Editor(
                     testTagName = DRINK_INPUT_TAG
                 )
             }
-            Row(modifier = Modifier.fillMaxWidth()) {
-                MyInput(
-                    modifier = Modifier.weight(.3f),
-                    "Menge",
-                    { newSize = it },
-                    keyboardType = KeyboardType.Number,
-                    testTagName = SIZE_INPUT_TAG
-                )
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.error)
+            ) {
                 // TODO: Replace with dropdown
                 MyInput(
-                    modifier = Modifier.fillMaxWidth(.5f),
+                    modifier = Modifier.weight(1f),
                     "Einheit",
                     { newSizeType = it },
                     testTagName = SIZE_TYPE_INPUT_TAG
                 )
                 MyInput(
+                    modifier = Modifier.weight(1f),
+                    "Menge",
+                    { newSize = it },
+                    keyboardType = KeyboardType.Number,
+                    testTagName = SIZE_INPUT_TAG
+                )
+                MyInput(
+                    modifier = Modifier.weight(1f),
                     label = "vol.%",
                     onUpdate = { newVol = it },
                     keyboardType = KeyboardType.Decimal,
                     testTagName = VOL_INPUT_TAG
                 )
             }
+
+            Spacer(Modifier.height(10.dp))
+
             fun addDrinkButtonHandler() {
                 val drinkSize = fromUi(newSize, newSizeType)
                 drinkSize.onSuccess {
@@ -131,7 +137,7 @@ fun Editor(
 fun AppPreview() {
     ProBierLessTheme {
         Scaffold { padding ->
-            Editor({}, {}, {}, Modifier.padding(padding))
+            Editor(Modifier.padding(padding), {}, {}, {})
         }
     }
 }

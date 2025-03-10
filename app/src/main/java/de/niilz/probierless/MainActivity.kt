@@ -48,8 +48,8 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<EditorRoute> {
                         MainView(
-                            editable = true,
-                            { navConrtoller.navigate(route = MainViewRoute) })
+                            editable = true
+                        ) { navConrtoller.navigate(route = MainViewRoute) }
                     }
                 }
             }
@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
-    addDrinks(3)
+    addDrinks(10)
     ProBierLessTheme {
         MainView(true, navigation = {})
     }
