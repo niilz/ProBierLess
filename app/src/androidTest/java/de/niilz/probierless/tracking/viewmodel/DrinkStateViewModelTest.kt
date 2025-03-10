@@ -1,6 +1,5 @@
 package de.niilz.probierless.tracking.viewmodel
 
-import de.niilz.probierless.tracking.dto.DrinkDto
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl

@@ -11,10 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.niilz.probierless.dev.preview.addDrinks
-import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.storage.Db
-import de.niilz.probierless.tracking.dto.DrinkDto
-import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.ui.components.MainView

@@ -1,7 +1,10 @@
 package de.niilz.probierless.tracking.mapper
 
 import de.niilz.probierless.storage.entity.DrinkEntity
-import de.niilz.probierless.tracking.dto.DrinkDto
+import de.niilz.probierless.ui.data.Drink
 
-fun toDto(drink: DrinkEntity) = DrinkDto(drink.name, drink.icon, drink.drinkSize, drink.vol)
-fun fromDto(drink: DrinkDto) = DrinkEntity(drink.name, drink.icon, drink.drinkSize, drink.vol)
+fun toUi(drink: DrinkEntity) =
+    Drink(drink.name, drink.icon, drink.drinkSize, drink.vol, drink.id)
+
+fun fromUi(drink: Drink, id: Int) =
+    DrinkEntity(drink.name, drink.icon, drink.drinkSize, drink.vol, id)

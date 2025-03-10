@@ -7,20 +7,17 @@ import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
 import de.niilz.probierless.ui.data.Drink
-import de.niilz.probierless.ui.mapper.fromUi
-import de.niilz.probierless.ui.mapper.toUi
 
 class DrinkStateViewModel : ViewModel() {
 
     // TODO: Use a map instead of a List
     val drinkState = DrinkRepositoryProvider.getRepository()
         ?.fetchAllDrinks()
-        ?.map { toUi(it) }
         ?.toMutableStateList()
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
-        val drinkId = drinkRepo().addDrink(fromUi(newDrink))
+        val drinkId = drinkRepo().addDrink(newDrink)
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
         newDrink.id = drinkId
         drinkState?.add(newDrink)
@@ -37,6 +34,10 @@ class DrinkStateViewModel : ViewModel() {
 
     fun clearDrinks() {
         drinkRepo().clearAllDrinks()
+    }
+
+    fun countDrink(i: Int) {
+        Log.e(TAG, "Counting is not implemented yet")
     }
 
     private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()

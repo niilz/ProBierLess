@@ -1,24 +1,25 @@
 package de.niilz.probierless.tracking.repository
 
 import de.niilz.probierless.storage.StoreRoot
-import de.niilz.probierless.tracking.dto.DrinkDto
-import de.niilz.probierless.tracking.mapper.fromDto
-import de.niilz.probierless.tracking.mapper.toDto
+import de.niilz.probierless.tracking.mapper.fromUi
+import de.niilz.probierless.tracking.mapper.toUi
+import de.niilz.probierless.ui.data.Drink
 import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 
 class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : DrinkRepository {
 
     private val drinkStore = storeManager.root() as StoreRoot
 
-    override fun fetchAllDrinks(): List<DrinkDto> {
-        return drinkStore.drinks.map { toDto(it) }
+    override fun fetchAllDrinks(): List<Drink> {
+        return drinkStore.drinks.map { toUi(it) }
     }
 
     // TODO: use Map instead of list and have an actual ID!
-    override fun addDrink(drink: DrinkDto): Int {
-        drinkStore.drinks.add(fromDto(drink))
+    override fun addDrink(drink: Drink): Int {
+        val nextId = drinkStore.drinks.size
+        drinkStore.drinks.add(fromUi(drink, nextId))
         storeManager.store(drinkStore.drinks)
-        return drinkStore.drinks.size - 1
+        return nextId
     }
 
     // TODO: use Map instead of list

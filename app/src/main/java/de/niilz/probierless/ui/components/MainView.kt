@@ -60,6 +60,7 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
             DrinkGrid(
                 Modifier.fillMaxHeight(.65f),
                 drinks,
+                drinkStateViewModel::countDrink,
                 drinkStateViewModel::deleteDrink
             )
 

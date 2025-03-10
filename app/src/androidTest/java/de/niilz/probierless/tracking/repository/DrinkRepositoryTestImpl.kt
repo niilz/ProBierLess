@@ -1,7 +1,5 @@
 package de.niilz.probierless.tracking.repository
 
-import de.niilz.probierless.tracking.dto.DrinkDto
-
 class DrinkRepositoryTestImpl : DrinkRepository {
     private val allDrinks = mutableListOf<DrinkDto>()
 

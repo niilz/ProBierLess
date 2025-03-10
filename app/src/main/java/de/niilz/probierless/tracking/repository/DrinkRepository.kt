@@ -1,10 +1,10 @@
 package de.niilz.probierless.tracking.repository
 
-import de.niilz.probierless.tracking.dto.DrinkDto
+import de.niilz.probierless.ui.data.Drink
 
 interface DrinkRepository {
-    fun fetchAllDrinks(): List<DrinkDto>
-    fun addDrink(drink: DrinkDto): Int
+    fun fetchAllDrinks(): List<Drink>
+    fun addDrink(drink: Drink): Int
     fun removeDrink(id: Int)
     fun clearAllDrinks()
 }

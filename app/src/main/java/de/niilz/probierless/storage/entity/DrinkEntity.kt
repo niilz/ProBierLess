@@ -6,5 +6,6 @@ data class DrinkEntity(
     val name: String,
     val icon: String,
     val drinkSize: DrinkSize,
-    val vol: Float
+    val vol: Float,
+    val id: Int,
 )

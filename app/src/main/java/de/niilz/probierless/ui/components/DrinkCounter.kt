@@ -11,25 +11,37 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
+import kotlinx.coroutines.launch
 
 @Composable
 fun DrinkCounter(
     modifier: Modifier = Modifier,
     drink: Drink,
+    countDrink: (Int) -> Unit,
     deleteDrink: (Int) -> Unit
 ) {
+    val scope = rememberCoroutineScope()
+    fun handleCountDrink() {
+        countDrink(drink.id ?: 42)
+        scope.launch {
+            MessageSnackBarHub.addMessage("Ein ${drink.name} gezählt")
+        }
+    }
+
     Card(
-        onClick = { println("clicked") },
+        onClick = { handleCountDrink() },
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -79,6 +91,6 @@ fun DrinkCounter(
 fun DrinkCounterPreview() {
     val drink = Drink("Bier", "\uD83E\uDD43", Ml(330), 17.8f)
     DrinkCounter(
-        drink = drink, deleteDrink = {}
+        drink = drink, countDrink = {}, deleteDrink = {}
     )
 }
