@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -58,10 +57,12 @@ fun Editor(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min),
-                verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 MyInput(
                     Modifier.weight(1f),
                     "Icon",
@@ -70,15 +71,18 @@ fun Editor(
                     testTagName = ICON_INPUT_TAG
                 )
                 MyInput(
-                    Modifier.weight(2.5f).fillMaxHeight(),
+                    Modifier
+                        .weight(2.5f)
+                        .fillMaxHeight(),
                     label = "Getränkename",
                     onUpdate = { newDrink = it },
                     testTagName = DRINK_INPUT_TAG
                 )
             }
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.error)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.error)
             ) {
                 // TODO: Replace with dropdown
                 MyInput(
@@ -128,6 +132,9 @@ fun Editor(
                 MyButton("alle löschen", clearDrinks)
             }
         }
+
+        Spacer(Modifier.height(10.dp))
+
         MyButton("Home", navigateToMainView)
     }
 }
