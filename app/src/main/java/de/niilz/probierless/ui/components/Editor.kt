@@ -60,17 +60,18 @@ fun Editor(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
                 verticalAlignment = Alignment.CenterVertically) {
                 MyInput(
-                    Modifier
-                        .fillMaxWidth(0.3f),
+                    Modifier.weight(1f),
                     "Icon",
                     { newIcon = it },
                     textStyle = MaterialTheme.typography.displayLarge,
                     testTagName = ICON_INPUT_TAG
                 )
                 MyInput(
+                    Modifier.weight(2.5f).fillMaxHeight(),
                     label = "Getränkename",
                     onUpdate = { newDrink = it },
                     testTagName = DRINK_INPUT_TAG
@@ -78,7 +79,7 @@ fun Editor(
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 MyInput(
-                    modifier = Modifier.fillMaxWidth(.3f),
+                    modifier = Modifier.weight(.3f),
                     "Menge",
                     { newSize = it },
                     keyboardType = KeyboardType.Number,
