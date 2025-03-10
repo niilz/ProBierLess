@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.niilz.probierless.cross.ErrorSnackBarHub
+import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.components.common.MyInput
 import de.niilz.probierless.ui.data.Drink
@@ -115,7 +115,7 @@ fun Editor(
                 }
                 drinkSize.onFailure {
                     scope.launch {
-                        ErrorSnackBarHub.addError(it.message ?: "no-message")
+                        MessageSnackBarHub.addMessage(it.message ?: "no-message")
                     }
                 }
             }

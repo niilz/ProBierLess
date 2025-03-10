@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.niilz.probierless.cross.ErrorSnackBarHub
+import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
@@ -41,7 +41,7 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
 
-        ObserveSnackBarErrors(ErrorSnackBarHub.errors, snackbarHostState) { errorEvent ->
+        ObserveSnackBar(MessageSnackBarHub.messages, snackbarHostState) { errorEvent ->
             scope.launch {
                 // Should not happen, but who knows
                 snackbarHostState.currentSnackbarData?.dismiss()

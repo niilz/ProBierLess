@@ -7,29 +7,29 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 
-class ErrorSnackBarHubTest {
+class MessageSnackBarHubTest {
 
     @Test
     fun `error message can be sent into channel`() = runTest {
         // given
         val testError = "Test-Error"
-        val initialValue = ErrorSnackBarHub.tryReceive()
+        val initialValue = MessageSnackBarHub.tryReceive()
         assertNull(initialValue)
 
         // when
         val sendJob = backgroundScope.launch {
-            ErrorSnackBarHub.addError(testError)
+            MessageSnackBarHub.addMessage(testError)
         }
 
         // then
         val evalJob = backgroundScope.launch {
-            val sentError = ErrorSnackBarHub.errors.firstOrNull()
+            val sentError = MessageSnackBarHub.messages.firstOrNull()
             assertEquals(testError, sentError)
         }
 
         listOf(sendJob, evalJob).forEach { it.join() }
 
-        val noMoreErrors = ErrorSnackBarHub.tryReceive()
+        val noMoreErrors = MessageSnackBarHub.tryReceive()
         assertNull(noMoreErrors)
     }
 }
