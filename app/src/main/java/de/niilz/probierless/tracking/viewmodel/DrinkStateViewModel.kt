@@ -12,6 +12,7 @@ import de.niilz.probierless.ui.mapper.toUi
 
 class DrinkStateViewModel : ViewModel() {
 
+    // TODO: Use a map instead of a List
     val drinkState = DrinkRepositoryProvider.getRepository()
         ?.fetchAllDrinks()
         ?.map { toUi(it) }
@@ -19,9 +20,19 @@ class DrinkStateViewModel : ViewModel() {
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
-        drinkRepo().addDrink(fromUi(newDrink))
+        val drinkId = drinkRepo().addDrink(fromUi(newDrink))
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
+        newDrink.id = drinkId
         drinkState?.add(newDrink)
+            ?: throw ModifyDrinkStateException("Could not add Drink to UI because drink-state was uninitialized")
+    }
+
+    fun deleteDrink(id: Int) {
+        Log.d(TAG, "Removing drink with id '$id' from repo")
+        drinkRepo().removeDrink(id)
+        Log.d(TAG, "Removing drink with id '$id' from UI-state")
+        drinkState?.removeAt(id)
+            ?: throw ModifyDrinkStateException("Could not delete Drink from UI because drink-state was uninitialized")
     }
 
     fun clearDrinks() {

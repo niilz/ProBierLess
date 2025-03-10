@@ -1,5 +1,6 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +19,15 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.navigation.UiState
+import de.niilz.probierless.ui.navigation.UiStateEnum
 
 @Composable
-fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
+fun DrinkCounter(
+    modifier: Modifier = Modifier,
+    drink: Drink,
+    deleteDrink: (Int) -> Unit
+) {
     Card(
         onClick = { println("clicked") },
         colors = CardColors(
@@ -38,6 +45,18 @@ fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            if (UiState.state === UiStateEnum.MAIN) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 10.dp)
+                        // TODO: Handle id == null case
+                        .clickable { deleteDrink(drink.id!!) },
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    Text("❌", fontSize = TextUnit(20f, TextUnitType.Sp))
+                }
+            }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -59,5 +78,7 @@ fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
 @Composable
 fun DrinkCounterPreview() {
     val drink = Drink("Bier", "\uD83E\uDD43", Ml(330), 17.8f)
-    DrinkCounter(drink)
+    DrinkCounter(
+        drink = drink, deleteDrink = {}
+    )
 }

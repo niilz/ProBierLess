@@ -14,9 +14,18 @@ class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : Dr
         return drinkStore.drinks.map { toDto(it) }
     }
 
-    override fun addDrink(drink: DrinkDto) {
+    // TODO: use Map instead of list and have an actual ID!
+    override fun addDrink(drink: DrinkDto): Int {
         drinkStore.drinks.add(fromDto(drink))
         storeManager.store(drinkStore.drinks)
+        return drinkStore.drinks.size - 1
+    }
+
+    // TODO: use Map instead of list
+    override fun removeDrink(id: Int) {
+        drinkStore.drinks.removeAt(id)
+        storeManager.store(drinkStore.drinks)
+
     }
 
     override fun clearAllDrinks() {

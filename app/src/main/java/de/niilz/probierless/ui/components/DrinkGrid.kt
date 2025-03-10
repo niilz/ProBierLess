@@ -13,7 +13,7 @@ import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
 
 @Composable
-fun DrinkGrid(modifier: Modifier = Modifier, drinks: List<Drink>) {
+fun DrinkGrid(modifier: Modifier = Modifier, drinks: List<Drink>, deleteDrink: (Int) -> Unit) {
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(3),
@@ -22,7 +22,10 @@ fun DrinkGrid(modifier: Modifier = Modifier, drinks: List<Drink>) {
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(drinks) { drink ->
-            DrinkCounter(drink)
+            DrinkCounter(
+                drink = drink,
+                deleteDrink = deleteDrink
+            )
         }
     }
 }
@@ -30,6 +33,8 @@ fun DrinkGrid(modifier: Modifier = Modifier, drinks: List<Drink>) {
 @Preview(showBackground = true)
 @Composable
 fun DrinkGridPreview() {
-    val drinks = (0..40).map { Drink("Bier", "\uD83C\uDF7A", Ml(330), 4.9f) }.toList()
-    DrinkGrid(drinks = drinks)
+    val drinks = (0..40).map {
+        Drink("Bier", "\uD83C\uDF7A", Ml(330), 4.9f)
+    }.toList()
+    DrinkGrid(drinks = drinks, deleteDrink = {})
 }

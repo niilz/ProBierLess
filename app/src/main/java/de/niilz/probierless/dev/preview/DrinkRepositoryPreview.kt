@@ -14,8 +14,14 @@ fun initDrinkRepositoryForPreview() {
             return previewDrinks
         }
 
-        override fun addDrink(drink: DrinkDto) {
+        // TODO: Use Map instead of a list and create actual IDs?
+        override fun addDrink(drink: DrinkDto): Int {
             previewDrinks.add(drink)
+            return previewDrinks.size - 1
+        }
+
+        override fun removeDrink(id: Int) {
+            previewDrinks.removeAt(id)
         }
 
         override fun clearAllDrinks() {
@@ -29,7 +35,8 @@ fun addDrinks(amount: Int) {
         initDrinkRepositoryForPreview()
     }
     for (count in 1..amount) {
-        val newDrink = DrinkDto("Drink-$count", emojiOptions.shuffled()[0], L(count * .1f), count.toFloat())
+        val newDrink =
+            DrinkDto("Drink-$count", emojiOptions.shuffled()[0], L(count * .1f), count.toFloat())
         DrinkRepositoryProvider
             .getRepository()?.addDrink(newDrink)
     }

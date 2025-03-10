@@ -59,7 +59,11 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
         ) {
             val drinks: List<Drink> = drinkStateViewModel.drinkState.orEmpty()
 
-            DrinkGrid(Modifier.fillMaxHeight(.65f), drinks)
+            DrinkGrid(
+                Modifier.fillMaxHeight(.65f),
+                drinks,
+                drinkStateViewModel::deleteDrink
+            )
 
             if (editable) {
                 Editor(
