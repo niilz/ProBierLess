@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
 
 @Composable
@@ -36,9 +38,12 @@ fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Row {
-                Text(text = drink.drinkSize.toString())
-                Text(text = drink.vol.toString())
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "${drink.drinkSize}")
+                Text(text = "${drink.vol}‰")
             }
             Text(
                 text = drink.icon,
@@ -48,4 +53,11 @@ fun DrinkCounter(drink: Drink, modifier: Modifier = Modifier) {
             Text(text = drink.name, modifier = modifier, fontSize = TextUnit(20f, TextUnitType.Sp))
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DrinkCounterPreview() {
+    val drink = Drink("Bier", "\uD83E\uDD43", Ml(330), 17.8f)
+    DrinkCounter(drink)
 }
