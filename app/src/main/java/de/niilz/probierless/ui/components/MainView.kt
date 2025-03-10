@@ -1,6 +1,5 @@
 package de.niilz.probierless.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -52,7 +51,6 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.error)
                 .padding(innerPadding),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally

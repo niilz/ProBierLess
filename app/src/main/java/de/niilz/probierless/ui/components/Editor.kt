@@ -1,6 +1,5 @@
 package de.niilz.probierless.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -82,7 +81,6 @@ fun Editor(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.error)
             ) {
                 // TODO: Replace with dropdown
                 MyInput(
