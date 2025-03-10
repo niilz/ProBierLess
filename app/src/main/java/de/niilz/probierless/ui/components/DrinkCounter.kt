@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import de.niilz.probierless.cross.MessageSnackBarHub
+import de.niilz.probierless.cross.ProbierLessException
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.navigation.UiState
@@ -34,7 +35,8 @@ fun DrinkCounter(
 ) {
     val scope = rememberCoroutineScope()
     fun handleCountDrink() {
-        countDrink(drink.id ?: 42)
+        val drinkId = drink.id ?: throw ProbierLessException("Drink-ID must not be null")
+        countDrink(drinkId)
         scope.launch {
             MessageSnackBarHub.addMessage("Ein ${drink.name} gezählt")
         }
