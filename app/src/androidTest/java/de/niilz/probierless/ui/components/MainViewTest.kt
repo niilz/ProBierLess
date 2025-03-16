@@ -12,6 +12,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
+import de.niilz.probierless.ui.theme.ProBierLessTheme
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -49,7 +50,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        rule.setContent { MainView(true, {}) }
+        rule.setContent { MainView(true) {} }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
@@ -57,7 +58,7 @@ class MainViewTest {
         drinkInput.performTextInput("Apfel")
 
         // Insert icon
-        val appleEmoji = "\uD83C\uDF4E"; // apple icon
+        val appleEmoji = "\uD83C\uDF4E" // apple icon
         val iconInput = rule.onNodeWithTag(ICON_INPUT_TAG)
         iconInput.assertExists()
         iconInput.performTextInput(appleEmoji)
@@ -73,13 +74,14 @@ class MainViewTest {
     @Test
     fun invalidDrinkAmountInputShowsUserErrors() {
         // given
-        rule.setContent { MainView(true, {}) }
+        rule.setContent { ProBierLessTheme { MainView(true) {} } }
         fillAllInputs()
 
         // when
         val amountInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
         amountInput.performTextClearance()
         amountInput.performTextInput("NaN")
+        amountInput.assertExists()
         rule.onNodeWithText(ADD_TEXT).performClick()
 
         // then
@@ -91,14 +93,19 @@ class MainViewTest {
     private fun fillAllInputs() {
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
+        drinkInput.assertExists()
         drinkInput.performTextInput(testDrinkName)
         val iconInput = rule.onNodeWithTag(ICON_INPUT_TAG)
+        iconInput.assertExists()
         iconInput.performTextInput(testIcon)
         val amountInput = rule.onNodeWithTag(SIZE_INPUT_TAG)
+        amountInput.assertExists()
         amountInput.performTextInput(testAmount)
         val unitInput = rule.onNodeWithTag(SIZE_TYPE_INPUT_TAG)
+        unitInput.assertExists()
         unitInput.performTextInput(testUnit)
         val volInput = rule.onNodeWithTag(VOL_INPUT_TAG)
+        volInput.assertExists()
         volInput.performTextInput(testVol)
     }
 

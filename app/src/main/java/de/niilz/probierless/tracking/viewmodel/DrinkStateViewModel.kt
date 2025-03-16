@@ -10,7 +10,6 @@ import de.niilz.probierless.ui.data.Drink
 
 class DrinkStateViewModel : ViewModel() {
 
-    // TODO: Use a map instead of a List
     val drinkState = DrinkRepositoryProvider.getRepository()
         ?.fetchAllDrinks()
         ?.toMutableStateList()
@@ -33,7 +32,11 @@ class DrinkStateViewModel : ViewModel() {
     }
 
     fun clearDrinks() {
+        Log.d(TAG, "Clearing drinks from repo")
         drinkRepo().clearAllDrinks()
+        Log.d(TAG, "Clearing drinks from UI-state")
+        drinkState?.clear()
+            ?: throw ModifyDrinkStateException("Could not clear Drink UI because drink-state was uninitialized")
     }
 
     fun countDrink(i: Int) {

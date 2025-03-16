@@ -3,20 +3,21 @@ package de.niilz.probierless.tracking.repository
 import de.niilz.probierless.ui.data.Drink
 
 class DrinkRepositoryTestImpl : DrinkRepository {
-    private val allDrinks = mutableListOf<Drink>()
+    private var idSequence = 0
+    private val allDrinks = mutableMapOf<Int, Drink>()
 
     override fun fetchAllDrinks(): List<Drink> {
-        return allDrinks
+        return allDrinks.map { it.value }
     }
 
     override fun addDrink(drink: Drink): Int {
-        val id = allDrinks.size
-        allDrinks.add(drink)
-        return id
+        idSequence += 1
+        allDrinks.put(idSequence, drink)
+        return idSequence
     }
 
     override fun removeDrink(id: Int) {
-        allDrinks.removeAt(id)
+        allDrinks.remove(id)
     }
 
     override fun clearAllDrinks() {

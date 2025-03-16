@@ -108,12 +108,15 @@ fun Editor(
             Spacer(Modifier.height(10.dp))
 
             fun addDrinkButtonHandler() {
+                println("Adding a new drink-button")
                 val drinkSize = fromUi(newSize, newSizeType)
                 drinkSize.onSuccess {
+                    println("SUCCESS: new drink-button")
                     val drink = Drink(newDrink, newIcon, it, newVol.toFloat())
                     addDrink(drink)
                 }
                 drinkSize.onFailure {
+                    println("FAILURE: new drink-button")
                     scope.launch {
                         MessageSnackBarHub.addMessage(it.message ?: "no-message")
                     }

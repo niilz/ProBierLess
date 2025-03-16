@@ -14,7 +14,6 @@ fun initDrinkRepositoryForPreview() {
             return previewDrinks
         }
 
-        // TODO: Use Map instead of a list and create actual IDs?
         override fun addDrink(drink: Drink): Int {
             previewDrinks.add(drink)
             return previewDrinks.size - 1
