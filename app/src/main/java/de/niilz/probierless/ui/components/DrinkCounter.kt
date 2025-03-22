@@ -59,7 +59,7 @@ fun DrinkCounter(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (UiState.state === UiStateEnum.MAIN) {
+            if (UiState.state === UiStateEnum.EDITOR) {
                 Row(
                     Modifier
                         .fillMaxWidth()

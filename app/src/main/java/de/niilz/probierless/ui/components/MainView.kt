@@ -23,11 +23,13 @@ import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.navigation.UiState
+import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainView(editable: Boolean = false, navigation: () -> Unit) {
+fun MainView(navigation: () -> Unit) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
 
@@ -64,7 +66,7 @@ fun MainView(editable: Boolean = false, navigation: () -> Unit) {
                 drinkStateViewModel::deleteDrink
             )
 
-            if (editable) {
+            if (UiState.state === UiStateEnum.EDITOR) {
                 Editor(
                     modifier = Modifier
                         .fillMaxWidth(.9f),
@@ -85,7 +87,7 @@ fun MainViewPreview() {
     initDrinkRepositoryForPreview()
     addDrinks(10)
     ProBierLessTheme {
-        MainView(true, navigation = {})
+        MainView(navigation = {})
     }
 }
 

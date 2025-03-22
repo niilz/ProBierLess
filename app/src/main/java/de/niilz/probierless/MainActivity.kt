@@ -17,6 +17,8 @@ import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.navigation.EditorRoute
 import de.niilz.probierless.ui.navigation.MainViewRoute
+import de.niilz.probierless.ui.navigation.UiState
+import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,14 +41,16 @@ class MainActivity : ComponentActivity() {
                 val navConrtoller = rememberNavController()
                 NavHost(navController = navConrtoller, startDestination = MainViewRoute) {
                     composable<MainViewRoute> {
-                        MainView(
-                            navigation = { navConrtoller.navigate(route = EditorRoute) }
-                        )
+                        MainView {
+                            UiState.state = UiStateEnum.EDITOR
+                            navConrtoller.navigate(route = EditorRoute)
+                        }
                     }
                     composable<EditorRoute> {
-                        MainView(
-                            editable = true
-                        ) { navConrtoller.navigate(route = MainViewRoute) }
+                        MainView {
+                            UiState.state = UiStateEnum.MAIN
+                            navConrtoller.navigate(route = MainViewRoute)
+                        }
                     }
                 }
             }
@@ -63,7 +67,7 @@ class MainActivity : ComponentActivity() {
 fun AppPreview() {
     addDrinks(10)
     ProBierLessTheme {
-        MainView(true, navigation = {})
+        MainView(navigation = {})
     }
 }
 
