@@ -9,11 +9,17 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import de.niilz.probierless.tracking.dto.L
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
+import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
+import de.niilz.probierless.ui.navigation.UiState
+import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -39,6 +45,7 @@ class MainViewTest {
     @Before
     fun setup() {
         DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
+        UiState.state = UiStateEnum.EDITOR
     }
 
     @Test
@@ -50,7 +57,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        rule.setContent { MainView(true) {} }
+        rule.setContent { MainView {} }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
@@ -74,7 +81,7 @@ class MainViewTest {
     @Test
     fun invalidDrinkAmountInputShowsUserErrors() {
         // given
-        rule.setContent { ProBierLessTheme { MainView(true) {} } }
+        rule.setContent { ProBierLessTheme { MainView {} } }
         fillAllInputs()
 
         // when
@@ -88,6 +95,31 @@ class MainViewTest {
         val errorSnackBar = rule.onNodeWithText("Drink-Size", substring = true)
         errorSnackBar.assertExists()
         errorSnackBar.assertTextEquals("$illegalDrinkSizeNaNErrorTemplate NaN")
+    }
+
+    @Test
+    fun deletingDrinkRemovesDrinkCounter() = runTest {
+        // given
+        val repo = DrinkRepositoryProvider.getRepository()!!
+        repo.addDrink(Drink("test-drink", "test-icon", L(0.5f), 0.5f))
+        assertEquals(1, repo.fetchAllDrinks().size)
+
+        rule.setContent {
+            MainView {}
+        }
+
+        val removeBeerButtonX = rule.onNodeWithText("❌")
+        removeBeerButtonX.assertExists()
+
+        // when
+        removeBeerButtonX.performClick()
+
+        // then
+        assertTrue(repo.fetchAllDrinks().isEmpty())
+    }
+
+    private fun initDrinkRepository() {
+        DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
     }
 
     private fun fillAllInputs() {
