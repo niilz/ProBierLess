@@ -10,6 +10,11 @@ import de.niilz.probierless.ui.data.Drink
 
 class DrinkStateViewModel : ViewModel() {
 
+    init {
+        Log.d(TAG, "DrinkStateViewModel initialized")
+    }
+
+    // TODO: Should this return a Map isntead?
     val drinkState = DrinkRepositoryProvider.getRepository()
         ?.fetchAllDrinks()
         ?.toMutableStateList()
@@ -27,6 +32,7 @@ class DrinkStateViewModel : ViewModel() {
         Log.d(TAG, "Removing drink with id '$id' from repo")
         drinkRepo().removeDrink(id)
         Log.d(TAG, "Removing drink with id '$id' from UI-state")
+        // FIXME: the ID is not the List-index!!! (either use a Map or use find by id and then remove)
         drinkState?.removeAt(id)
             ?: throw ModifyDrinkStateException("Could not delete Drink from UI because drink-state was uninitialized")
     }
