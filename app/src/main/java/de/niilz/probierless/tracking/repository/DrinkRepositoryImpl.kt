@@ -8,7 +8,6 @@ import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager
 
 class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : DrinkRepository {
 
-    private var idSequence = 0
     private val drinkStore = storeManager.root() as StoreRoot
 
     override fun fetchAllDrinks(): List<Drink> {
@@ -16,10 +15,11 @@ class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : Dr
     }
 
     override fun addDrink(drink: Drink): Int {
-        idSequence += 1
-        drinkStore.drinks.put(idSequence, fromUi(drink, idSequence))
+        drinkStore.idSequence += 1
+        storeManager.store(drinkStore)
+        drinkStore.drinks.put(drinkStore.idSequence, fromUi(drink, drinkStore.idSequence))
         storeManager.store(drinkStore.drinks)
-        return idSequence
+        return drinkStore.idSequence
     }
 
     override fun removeDrink(id: Int) {
