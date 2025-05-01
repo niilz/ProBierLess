@@ -1,7 +1,6 @@
 package de.niilz.probierless.tracking.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
@@ -14,27 +13,23 @@ class DrinkStateViewModel : ViewModel() {
         Log.d(TAG, "DrinkStateViewModel initialized")
     }
 
-    // TODO: Should this return a Map isntead?
     val drinkState = DrinkRepositoryProvider.getRepository()
         ?.fetchAllDrinks()
-        ?.toMutableStateList()
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
         val drinkId = drinkRepo().addDrink(newDrink)
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
-        newDrink.id = drinkId
-        drinkState?.add(newDrink)
-            ?: throw ModifyDrinkStateException("Could not add Drink to UI because drink-state was uninitialized")
+        drinkState?.put(drinkId, newDrink)
+            ?.let { throw ModifyDrinkStateException("Drink with Id $drinkId already existed. $it got overridden by $newDrink") }
     }
 
     fun deleteDrink(id: Int) {
         Log.d(TAG, "Removing drink with id '$id' from repo")
         drinkRepo().removeDrink(id)
         Log.d(TAG, "Removing drink with id '$id' from UI-state")
-        // FIXME: the ID is not the List-index!!! (either use a Map or use find by id and then remove)
-        drinkState?.removeAt(id)
-            ?: throw ModifyDrinkStateException("Could not delete Drink from UI because drink-state was uninitialized")
+        drinkState?.remove(id)
+            ?: throw ModifyDrinkStateException("Could not delete Drink from UI. $id did not exist or drink-state was uninitialized")
     }
 
     fun clearDrinks() {

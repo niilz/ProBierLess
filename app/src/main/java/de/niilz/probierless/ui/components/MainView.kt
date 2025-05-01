@@ -57,7 +57,7 @@ fun MainView(navigation: () -> Unit) {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinks: List<Drink> = drinkStateViewModel.drinkState.orEmpty()
+            val drinks: Map<Int, Drink> = drinkStateViewModel.drinkState.orEmpty()
 
             DrinkGrid(
                 Modifier.fillMaxHeight(.65f),

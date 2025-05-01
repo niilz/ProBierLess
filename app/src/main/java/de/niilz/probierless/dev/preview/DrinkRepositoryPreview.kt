@@ -9,18 +9,20 @@ val emojiOptions = listOf("\uD83C\uDF7A", "\uD83C\uDF77", "\uD83C\uDF4E", "\uD83
 
 fun initDrinkRepositoryForPreview() {
     DrinkRepositoryProvider.init(object : DrinkRepository {
-        val previewDrinks = mutableListOf<Drink>()
-        override fun fetchAllDrinks(): List<Drink> {
+        var idSequence = 0;
+        val previewDrinks = mutableMapOf<Int, Drink>()
+        override fun fetchAllDrinks(): MutableMap<Int, Drink> {
             return previewDrinks
         }
 
         override fun addDrink(drink: Drink): Int {
-            previewDrinks.add(drink)
-            return previewDrinks.size - 1
+            idSequence += 1
+            previewDrinks.put(idSequence, drink)
+            return idSequence
         }
 
         override fun removeDrink(id: Int) {
-            previewDrinks.removeAt(id)
+            previewDrinks.remove(id)
         }
 
         override fun clearAllDrinks() {

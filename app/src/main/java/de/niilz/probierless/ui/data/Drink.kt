@@ -7,5 +7,4 @@ data class Drink(
     val icon: String,
     val drinkSize: DrinkSize,
     val vol: Float,
-    var id: Int? = null,
 )

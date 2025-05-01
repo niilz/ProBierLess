@@ -15,7 +15,7 @@ import de.niilz.probierless.ui.data.Drink
 @Composable
 fun DrinkGrid(
     modifier: Modifier = Modifier,
-    drinks: List<Drink>,
+    drinks: Map<Int, Drink>,
     countDrink: (Int) -> Unit,
     deleteDrink: (Int) -> Unit
 ) {
@@ -26,9 +26,9 @@ fun DrinkGrid(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(drinks) { drink ->
+        items(drinks.entries.toList()) { drink ->
             DrinkCounter(
-                drink = drink,
+                drinkEntry = drink,
                 countDrink = countDrink,
                 deleteDrink = deleteDrink
             )
@@ -39,8 +39,8 @@ fun DrinkGrid(
 @Preview(showBackground = true)
 @Composable
 fun DrinkGridPreview() {
-    val drinks = (0..40).map {
-        Drink("Bier", "\uD83C\uDF7A", Ml(330), 4.9f)
-    }.toList()
+    val drinks = (0..40).associate {
+        Pair(it, Drink("Bier", "\uD83C\uDF7A", Ml(330), 4.9f))
+    }
     DrinkGrid(drinks = drinks, countDrink = {}, deleteDrink = {})
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import de.niilz.probierless.cross.MessageSnackBarHub
-import de.niilz.probierless.cross.ProbierLessException
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.navigation.UiState
@@ -29,16 +28,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun DrinkCounter(
     modifier: Modifier = Modifier,
-    drink: Drink,
+    drinkEntry: Map.Entry<Int, Drink>,
     countDrink: (Int) -> Unit,
     deleteDrink: (Int) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     fun handleCountDrink() {
-        val drinkId = drink.id ?: throw ProbierLessException("Drink-ID must not be null")
+        val drinkId = drinkEntry.key
         countDrink(drinkId)
         scope.launch {
-            MessageSnackBarHub.addMessage("Ein ${drink.name} gezählt")
+            MessageSnackBarHub.addMessage("Ein ${drinkEntry.value} gezählt")
         }
     }
 
@@ -52,6 +51,7 @@ fun DrinkCounter(
         )
     ) {
         // TODO: Do not have these hardcoded sizes, use Material.typography
+        val drink = drinkEntry.value
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -65,7 +65,7 @@ fun DrinkCounter(
                         .fillMaxWidth()
                         .padding(bottom = 10.dp)
                         // TODO: Handle id == null case
-                        .clickable { deleteDrink(drink.id!!) },
+                        .clickable { deleteDrink(drinkEntry.key) },
                     horizontalArrangement = Arrangement.End,
                 ) {
                     Text("❌", fontSize = TextUnit(20f, TextUnitType.Sp))
@@ -91,8 +91,9 @@ fun DrinkCounter(
 @Preview(showBackground = true)
 @Composable
 fun DrinkCounterPreview() {
-    val drink = Drink("Bier", "\uD83E\uDD43", Ml(330), 17.8f)
+    val drink =
+        mapOf(Pair(42, Drink("Bier", "\uD83E\uDD43", Ml(330), 17.8f))).entries.iterator().next()
     DrinkCounter(
-        drink = drink, countDrink = {}, deleteDrink = {}
+        drinkEntry = drink, countDrink = {}, deleteDrink = {}
     )
 }

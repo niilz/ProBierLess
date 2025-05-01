@@ -1,5 +1,6 @@
 package de.niilz.probierless.tracking.repository
 
+import androidx.compose.runtime.toMutableStateMap
 import de.niilz.probierless.storage.StoreRoot
 import de.niilz.probierless.tracking.mapper.fromUi
 import de.niilz.probierless.tracking.mapper.toUi
@@ -10,8 +11,8 @@ class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : Dr
 
     private val drinkStore = storeManager.root() as StoreRoot
 
-    override fun fetchAllDrinks(): List<Drink> {
-        return drinkStore.drinks.map { toUi(it.value) }
+    override fun fetchAllDrinks(): MutableMap<Int, Drink> {
+        return drinkStore.drinks.map { Pair(it.key, toUi(it.value)) }.toMutableStateMap()
     }
 
     override fun addDrink(drink: Drink): Int {
