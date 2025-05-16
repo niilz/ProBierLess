@@ -13,7 +13,6 @@ private const val TEST_DRINK = "test-drink"
 private const val TEST_ICON = "test-icon"
 private val TEST_SIZE = Ml(330)
 private const val TEST_VOL = 4.9f
-private const val TEST_ID = 1
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -47,13 +46,13 @@ class DrinkStateViewModelTest {
         // then
         assertEquals(1, drinkStateViewModel.drinkState?.size)
         assertEquals(
-            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL, TEST_ID),
+            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             drinkStateViewModel.drinkState?.get(0)
         )
         val allRepoDrinks = DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
         assertEquals(1, allRepoDrinks?.size)
         assertEquals(
-            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL, TEST_ID),
+            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             allRepoDrinks?.get(0)
         )
     }
