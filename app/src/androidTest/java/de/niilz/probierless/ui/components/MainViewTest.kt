@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import androidx.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import de.niilz.probierless.tracking.dto.L
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
@@ -41,7 +41,7 @@ class MainViewTest {
 
     @Before
     fun setup() {
-        DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
+        initDrinkRepository()
         UiState.state = UiStateEnum.EDITOR
     }
 
