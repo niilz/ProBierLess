@@ -1,6 +1,7 @@
 package de.niilz.probierless.tracking.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
@@ -14,14 +15,13 @@ class DrinkStateViewModel : ViewModel() {
     }
 
     val drinkState = DrinkRepositoryProvider.getRepository()
-        ?.fetchAllDrinks()
+        ?.fetchAllDrinks() ?: mutableStateMapOf()
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
         val drinkId = drinkRepo().addDrink(newDrink)
         Log.d(TAG, "Add drink '$newDrink' to UI-state")
-        drinkState?.put(drinkId, newDrink)
-            ?.let { throw ModifyDrinkStateException("Drink with Id $drinkId already existed. $it got overridden by $newDrink") }
+        drinkState.put(drinkId, newDrink)
     }
 
     fun deleteDrink(id: Int) {

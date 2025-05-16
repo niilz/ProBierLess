@@ -32,7 +32,7 @@ class DrinkStateViewModelTest {
 
     @Test
     fun drinkStateModelIsEmptyAtTheBeginning() {
-        assertTrue(drinkStateViewModel.drinkState?.isEmpty() ?: false)
+        assertTrue(drinkStateViewModel.drinkState?.isEmpty() == true)
     }
 
     @Test
@@ -47,13 +47,13 @@ class DrinkStateViewModelTest {
         assertEquals(1, drinkStateViewModel.drinkState?.size)
         assertEquals(
             Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
-            drinkStateViewModel.drinkState?.get(0)
+            drinkStateViewModel.drinkState?.get(1)
         )
         val allRepoDrinks = DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
         assertEquals(1, allRepoDrinks?.size)
         assertEquals(
             Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
-            allRepoDrinks?.get(0)
+            allRepoDrinks?.get(1)
         )
     }
 
