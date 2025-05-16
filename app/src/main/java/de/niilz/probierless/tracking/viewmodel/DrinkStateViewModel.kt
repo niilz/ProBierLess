@@ -14,27 +14,27 @@ class DrinkStateViewModel : ViewModel() {
         Log.d(TAG, "DrinkStateViewModel initialized")
     }
 
-    val drinkState = updateDrinkState()
+    val drinkState = initDrinkState()
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
         val drinkId = drinkRepo().addDrink(newDrink)
         Log.d(TAG, "Add drink '$newDrink' with id $drinkId to UI-state")
-        updateDrinkState()
+        drinkState.put(drinkId, newDrink)
     }
 
     fun deleteDrink(id: Int) {
         Log.d(TAG, "Removing drink with id '$id' from repo")
         drinkRepo().removeDrink(id)
         Log.d(TAG, "Removing drink with id '$id' from UI-state")
-        updateDrinkState()
+        drinkState.remove(id)
     }
 
     fun clearDrinks() {
         Log.d(TAG, "Clearing drinks from repo")
         drinkRepo().clearAllDrinks()
         Log.d(TAG, "Clearing drinks from UI-state")
-        updateDrinkState()
+        drinkState.clear()
     }
 
     fun countDrink(i: Int) {
@@ -44,7 +44,7 @@ class DrinkStateViewModel : ViewModel() {
     private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()
         ?: throw RepositoryNotInitializedError("The DrinkRepository has not been initialized")
 
-    private fun updateDrinkState() =
+    private fun initDrinkState() =
         DrinkRepositoryProvider.getRepository()?.fetchAllDrinks() ?: emptyState()
 
     fun emptyState(): MutableMap<Int, Drink> {
