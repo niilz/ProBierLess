@@ -6,8 +6,8 @@ class DrinkRepositoryTestImpl : DrinkRepository {
     private var idSequence = 0
     private val allDrinks = mutableMapOf<Int, Drink>()
 
-    override fun fetchAllDrinks(): List<Drink> {
-        return allDrinks.map { it.value }
+    override fun fetchAllDrinks(): MutableMap<Int, Drink> {
+        return allDrinks
     }
 
     override fun addDrink(drink: Drink): Int {
