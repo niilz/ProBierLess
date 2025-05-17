@@ -1,6 +1,5 @@
 # TODO
 
-- Store count to Repo (+ Test)
 - Add button that clears the counters for Next-Day (maybe on MainView next to Anpassen)
 - Add overview (show how many drinks have been consumed) ideally a diagram like bar or something
 - Add config screen to define max % per Day (per Week)

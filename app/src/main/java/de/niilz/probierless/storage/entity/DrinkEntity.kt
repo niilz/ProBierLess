@@ -10,5 +10,8 @@ data class DrinkEntity(
     var count: Int = 0,
 ) {
     fun incrementCount() = count++
+    fun resetCount() {
+        count = 0
+    }
 }
 

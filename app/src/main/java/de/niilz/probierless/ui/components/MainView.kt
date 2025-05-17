@@ -2,6 +2,7 @@ package de.niilz.probierless.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -77,7 +78,10 @@ fun MainView(navigation: () -> Unit) {
                     navigateToMainView = navigation
                 )
             } else {
-                MyButton("Anpassen", navigation)
+                Row(modifier = Modifier.fillMaxWidth(.9f)) {
+                    MyButton("Anpassen", navigation)
+                    MyButton("Reset", drinkStateViewModel::resetCounts)
+                }
             }
         }
     }

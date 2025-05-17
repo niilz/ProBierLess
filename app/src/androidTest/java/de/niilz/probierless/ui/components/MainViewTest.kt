@@ -1,8 +1,10 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -141,10 +143,44 @@ class MainViewTest {
 
         // when - click two
         testDrinkButton.performClick()
-        rule.waitForIdle()
         // then - 2
         testDrinkButton.assertTextContains("2")
         assertEquals(2, repo.fetchAllDrinks()[1]?.count)
+    }
+
+    @Test
+    fun resettingCounterWorks() = runTest {
+        // given
+        UiState.state = UiStateEnum.MAIN
+        val repo = DrinkRepositoryProvider.getRepository()!!
+        val drinkName = "test-drink"
+        repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f, 42))
+        repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f, 43))
+        assertEquals(2, repo.fetchAllDrinks().size)
+
+        rule.setContent {
+            ProBierLessTheme { MainView {} }
+        }
+
+        val testDrinkButtons = rule.onAllNodesWithText(drinkName)
+        testDrinkButtons.assertCountEquals(2)
+        val buttonOne = testDrinkButtons[0]
+        buttonOne.assertTextContains("42")
+        val buttonTwo = testDrinkButtons[1]
+        buttonTwo.assertTextContains("43")
+
+        val resetButton = rule.onNodeWithText("Reset")
+        resetButton.assertExists()
+
+        // when - click one
+        resetButton.performClick()
+
+        // then
+        buttonOne.assertTextContains("0")
+        assertEquals(0, repo.fetchAllDrinks()[1]?.count)
+
+        buttonTwo.assertTextContains("0")
+        assertEquals(0, repo.fetchAllDrinks()[2]?.count)
     }
 
     private fun initDrinkRepository() {

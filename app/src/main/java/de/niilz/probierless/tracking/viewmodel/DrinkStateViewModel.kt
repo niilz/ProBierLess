@@ -57,6 +57,15 @@ class DrinkStateViewModel : ViewModel() {
         Log.d(TAG, "Incremented drink $drinkEntity")
     }
 
+    fun resetCounts() {
+        Log.d(TAG, "Resetting all drink counts")
+        drinkRepo().fetchAllDrinks().forEach {
+            it.value.resetCount()
+            drinkRepo().updateDrink(it.key, it.value)
+        }
+        _drinkState.value = initDrinkState().toMutableMap()
+    }
+
     private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()
         ?: throw RepositoryNotInitializedError("The DrinkRepository has not been initialized")
 
