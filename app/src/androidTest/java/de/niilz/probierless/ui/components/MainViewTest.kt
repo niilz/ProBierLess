@@ -1,5 +1,6 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -113,6 +114,35 @@ class MainViewTest {
 
         // then
         assertTrue(repo.fetchAllDrinks().isEmpty())
+    }
+
+    @Test
+    fun countingDrinkIncrementsCountValue() = runTest {
+        // given
+        UiState.state = UiStateEnum.MAIN
+        val repo = DrinkRepositoryProvider.getRepository()!!
+        val drinkName = "test-drink"
+        repo.addDrink(Drink(drinkName, "test-icon", L(0.5f), 0.5f))
+        assertEquals(1, repo.fetchAllDrinks().size)
+
+        rule.setContent {
+            ProBierLessTheme { MainView {} }
+        }
+
+        val testDrinkButton = rule.onNodeWithTag("drink-counter-1")
+        testDrinkButton.assertExists()
+        testDrinkButton.assertTextContains("0")
+
+        // when - click one
+        testDrinkButton.performClick()
+        // then - 1
+        testDrinkButton.assertTextContains("1")
+
+        // when - click two
+        testDrinkButton.performClick()
+        rule.waitForIdle()
+        // then - 2
+        testDrinkButton.assertTextContains("2")
     }
 
     private fun initDrinkRepository() {

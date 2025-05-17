@@ -44,7 +44,9 @@ class DrinkStateViewModel : ViewModel() {
     fun countDrink(drinkId: Int) {
         val drink = drinkState.value[drinkId]
             ?: throw ProbierLessException("Could not increment drink with id $drinkId because it does not exist")
-        _drinkState.value[drinkId] = drink.cloneAndIncrementCount()
+        _drinkState.value = _drinkState.value.toMutableMap().apply {
+            this[drinkId] = drink.cloneAndIncrementCount()
+        }
         Log.d(TAG, "Incremented drink $drink")
     }
 

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -37,12 +38,13 @@ fun DrinkCounter(
         val drinkId = drinkEntry.key
         countDrink(drinkId)
         scope.launch {
-            MessageSnackBarHub.addMessage("Ein ${drinkEntry.value} gezählt")
+            MessageSnackBarHub.addMessage("Ein ${drinkEntry.value.name} gezählt")
         }
     }
 
     Card(
         onClick = { handleCountDrink() },
+        modifier = modifier.testTag("drink-counter-${drinkEntry.key}"),
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
