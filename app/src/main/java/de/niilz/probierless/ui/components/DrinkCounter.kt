@@ -89,7 +89,7 @@ fun DrinkCounter(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "${drink.getCount()}",
+                    text = "${drink.count}",
                     modifier = modifier,
                     fontSize = TextUnit(20f, TextUnitType.Sp)
                 )
