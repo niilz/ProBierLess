@@ -1,6 +1,5 @@
 # TODO
 
-- Solve null pointer in deletion test (drink-id is NOT the List-Index) -> Fix the tests
 - Add actual counting logic on DrinkCount (needs Data-Layer)
 - Add overview (show how many drinks have been consumed)
 - Add config screen to define max % per Day (per Week)

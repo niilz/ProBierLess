@@ -64,7 +64,6 @@ fun DrinkCounter(
                     Modifier
                         .fillMaxWidth()
                         .padding(bottom = 10.dp)
-                        // TODO: Handle id == null case
                         .clickable { deleteDrink(drinkEntry.key) },
                     horizontalArrangement = Arrangement.End,
                 ) {
@@ -83,7 +82,21 @@ fun DrinkCounter(
                 modifier = modifier.padding(10.dp),
                 fontSize = TextUnit(40f, TextUnitType.Sp)
             )
-            Text(text = drink.name, modifier = modifier, fontSize = TextUnit(20f, TextUnitType.Sp))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "${drink.getCount()}",
+                    modifier = modifier,
+                    fontSize = TextUnit(20f, TextUnitType.Sp)
+                )
+                Text(
+                    text = drink.name,
+                    modifier = modifier,
+                    fontSize = TextUnit(20f, TextUnitType.Sp)
+                )
+            }
         }
     }
 }

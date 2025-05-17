@@ -11,6 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -22,7 +24,6 @@ import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.common.MyButton
-import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
@@ -57,7 +58,8 @@ fun MainView(navigation: () -> Unit) {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drinks: Map<Int, Drink> = drinkStateViewModel.drinkState.orEmpty()
+
+            val drinks by drinkStateViewModel.drinkState.collectAsState()
 
             DrinkGrid(
                 Modifier.fillMaxHeight(.65f),
