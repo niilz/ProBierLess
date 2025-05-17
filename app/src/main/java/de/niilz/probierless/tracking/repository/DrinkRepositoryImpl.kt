@@ -26,6 +26,9 @@ class DrinkRepositoryImpl(private val storeManager: EmbeddedStorageManager) : Dr
     ) {
         drinkStore.drinks.put(id, entity)
         storeManager.store(drinkStore.drinks)
+        // It's actually enough to store the entity
+        // if it's already part of the object graph
+        storeManager.store(entity)
     }
 
     override fun removeDrink(id: Int) {
