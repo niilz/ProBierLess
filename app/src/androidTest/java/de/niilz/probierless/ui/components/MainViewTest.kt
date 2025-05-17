@@ -137,12 +137,14 @@ class MainViewTest {
         testDrinkButton.performClick()
         // then - 1
         testDrinkButton.assertTextContains("1")
+        assertEquals(1, repo.fetchAllDrinks()[1]?.count)
 
         // when - click two
         testDrinkButton.performClick()
         rule.waitForIdle()
         // then - 2
         testDrinkButton.assertTextContains("2")
+        assertEquals(2, repo.fetchAllDrinks()[1]?.count)
     }
 
     private fun initDrinkRepository() {
