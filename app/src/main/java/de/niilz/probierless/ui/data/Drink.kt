@@ -8,7 +8,4 @@ data class Drink(
     val drinkSize: DrinkSize,
     val vol: Float,
     val count: Int = 0
-) {
-    fun cloneAndIncrementCount() =
-        Drink(this.name, this.icon, this.drinkSize, this.vol, this.count + 1)
-}
+)

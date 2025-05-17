@@ -7,5 +7,8 @@ data class DrinkEntity(
     val icon: String,
     val drinkSize: DrinkSize,
     val vol: Float,
-    val id: Int,
-)
+    var count: Int = 0,
+) {
+    fun incrementCount() = count++
+}
+

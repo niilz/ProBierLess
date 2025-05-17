@@ -1,5 +1,6 @@
 package de.niilz.probierless.tracking.viewmodel
 
+import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.Ml
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
@@ -52,7 +53,7 @@ class DrinkStateViewModelTest {
         val allRepoDrinks = DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
         assertEquals(1, allRepoDrinks?.size)
         assertEquals(
-            Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
+            DrinkEntity(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             allRepoDrinks?.get(1)
         )
     }

@@ -9,10 +9,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
+import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.L
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
-import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
@@ -99,7 +99,7 @@ class MainViewTest {
     fun deletingDrinkRemovesDrinkCounter() = runTest {
         // given
         val repo = DrinkRepositoryProvider.getRepository()!!
-        repo.addDrink(Drink("test-drink", "test-icon", L(0.5f), 0.5f))
+        repo.addDrink(DrinkEntity("test-drink", "test-icon", L(0.5f), 0.5f))
         assertEquals(1, repo.fetchAllDrinks().size)
 
         rule.setContent {
@@ -122,7 +122,7 @@ class MainViewTest {
         UiState.state = UiStateEnum.MAIN
         val repo = DrinkRepositoryProvider.getRepository()!!
         val drinkName = "test-drink"
-        repo.addDrink(Drink(drinkName, "test-icon", L(0.5f), 0.5f))
+        repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f))
         assertEquals(1, repo.fetchAllDrinks().size)
 
         rule.setContent {

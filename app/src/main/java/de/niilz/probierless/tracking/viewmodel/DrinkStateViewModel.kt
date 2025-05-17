@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import de.niilz.probierless.cross.ProbierLessException
+import de.niilz.probierless.tracking.mapper.fromUi
+import de.niilz.probierless.tracking.mapper.toUi
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
@@ -17,44 +19,50 @@ class DrinkStateViewModel : ViewModel() {
         Log.d(TAG, "DrinkStateViewModel initialized")
     }
 
-    private val _drinkState = MutableStateFlow(initDrinkState())
+    private val _drinkState = MutableStateFlow(initDrinkState().toMutableMap())
     val drinkState: StateFlow<MutableMap<Int, Drink>> = _drinkState
 
     fun addDrink(newDrink: Drink) {
         Log.d(TAG, "Add drink '$newDrink' to drink-repo")
-        val drinkId = drinkRepo().addDrink(newDrink)
+        val drinkEntity = fromUi(newDrink)
+        val drinkId = drinkRepo().addDrink(drinkEntity)
         Log.d(TAG, "Add drink '$newDrink' with id $drinkId to UI-state")
-        drinkState.value.put(drinkId, newDrink)
+        _drinkState.value = _drinkState.value.toMutableMap().apply {
+            this.put(drinkId, newDrink)
+        }
     }
 
     fun deleteDrink(id: Int) {
         Log.d(TAG, "Removing drink with id '$id' from repo")
         drinkRepo().removeDrink(id)
         Log.d(TAG, "Removing drink with id '$id' from UI-state")
-        drinkState.value.remove(id)
+        _drinkState.value = _drinkState.value.toMutableMap().apply { this.remove(id) }
     }
 
     fun clearDrinks() {
         Log.d(TAG, "Clearing drinks from repo")
         drinkRepo().clearAllDrinks()
         Log.d(TAG, "Clearing drinks from UI-state")
-        drinkState.value.clear()
+        _drinkState.value = mutableStateMapOf()
     }
 
     fun countDrink(drinkId: Int) {
-        val drink = drinkState.value[drinkId]
+        val drinkEntity = drinkRepo().fetchDrink(drinkId)
             ?: throw ProbierLessException("Could not increment drink with id $drinkId because it does not exist")
+        drinkEntity.incrementCount()
+        drinkRepo().updateDrink(drinkId, drinkEntity)
         _drinkState.value = _drinkState.value.toMutableMap().apply {
-            this[drinkId] = drink.cloneAndIncrementCount()
+            this[drinkId] = toUi(drinkEntity)
         }
-        Log.d(TAG, "Incremented drink $drink")
+        Log.d(TAG, "Incremented drink $drinkEntity")
     }
 
     private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()
         ?: throw RepositoryNotInitializedError("The DrinkRepository has not been initialized")
 
     private fun initDrinkState() =
-        DrinkRepositoryProvider.getRepository()?.fetchAllDrinks() ?: emptyState()
+        DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
+            ?.map { Pair(it.key, toUi(it.value)) }?.toMap() ?: emptyState()
 
     fun emptyState(): MutableMap<Int, Drink> {
         Log.w(TAG, "Could not fetch from Repository, returning empty state")
