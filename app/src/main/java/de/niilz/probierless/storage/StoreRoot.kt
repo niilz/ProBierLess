@@ -6,4 +6,5 @@ class StoreRoot {
 
     var idSequence = 0
     var drinks = mutableMapOf<Int, DrinkEntity>()
+    var alcoholDayLimit = 0
 }

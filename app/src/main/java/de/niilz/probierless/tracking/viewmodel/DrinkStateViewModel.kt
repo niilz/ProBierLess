@@ -66,11 +66,11 @@ class DrinkStateViewModel : ViewModel() {
         _drinkState.value = initDrinkState().toMutableMap()
     }
 
-    private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()
+    private fun drinkRepo(): DrinkRepository = RepositoryProvider.getDrinkRepository()
         ?: throw RepositoryNotInitializedError("The DrinkRepository has not been initialized")
 
     private fun initDrinkState() =
-        DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
+        RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()
             ?.map { Pair(it.key, toUi(it.value)) }?.toMap() ?: emptyState()
 
     fun emptyState(): MutableMap<Int, Drink> {

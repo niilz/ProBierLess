@@ -20,12 +20,22 @@ class SettingsViewModel : ViewModel() {
     private val _settingsState = MutableStateFlow(initDrinkState().toMutableMap())
     val settingsState: StateFlow<MutableMap<Int, Drink>> = _settingsState
 
+    fun addDrinkToDayLimit(drink: Drink) {
+        val currentDayLimit = settingsRepo().fetchAlcoholDayLimit()
+        val alcoholAmount = calcAlcoholAmount(drink)
+        settingsRepo().storeAlcoholDayLimit(currentDayLimit + alcoholAmount)
+    }
+
+    private fun calcAlcoholAmount(drink: Drink) : Int {
+        TODO()
+    }
+
     private fun initDrinkState() =
-        DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
+        RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()
             ?.map { Pair(it.key, toUiCountZero(it.value)) }?.toMap() ?: emptyState()
 
-    private fun drinkRepo(): DrinkRepository = DrinkRepositoryProvider.getRepository()
-        ?: throw RepositoryNotInitializedError("The DrinkRepository has not been initialized")
+    private fun settingsRepo(): SettingsRepository = RepositoryProvider.getSettingsRepository()
+        ?: throw RepositoryNotInitializedError("The SettingsRepository has not been initialized")
 
     fun emptyState(): MutableMap<Int, Drink> {
         Log.w(TAG, "Could not fetch from Repository, returning empty state")
