@@ -25,10 +25,10 @@ import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
 import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.components.ObserveSnackBar
+import de.niilz.probierless.ui.components.Settings
 import de.niilz.probierless.ui.navigation.EditorRoute
 import de.niilz.probierless.ui.navigation.MainViewRoute
-import de.niilz.probierless.ui.navigation.UiState
-import de.niilz.probierless.ui.navigation.UiStateEnum
+import de.niilz.probierless.ui.navigation.SettingsRoute
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 import kotlinx.coroutines.launch
 
@@ -72,17 +72,13 @@ class MainActivity : ComponentActivity() {
                     }
                     NavHost(navController = navConrtoller, startDestination = MainViewRoute) {
                         composable<MainViewRoute> {
-                            MainView(innerPadding) {
-                                UiState.state = UiStateEnum.EDITOR
-                                navConrtoller.navigate(route = EditorRoute)
-                            }
+                            MainView(innerPadding, navConrtoller)
                         }
                         composable<EditorRoute> {
-                            MainView(innerPadding) {
-                                UiState.state = UiStateEnum.MAIN
-                                navConrtoller.navigate(route = MainViewRoute)
-                                innerPadding
-                            }
+                            MainView(innerPadding, navConrtoller)
+                        }
+                        composable<SettingsRoute> {
+                            Settings(innerPadding, navConrtoller)
                         }
                     }
                 }
@@ -100,7 +96,7 @@ class MainActivity : ComponentActivity() {
 fun AppPreview() {
     addDrinks(10)
     ProBierLessTheme {
-        MainView {}
+        MainView()
     }
 }
 

@@ -2,8 +2,13 @@ package de.niilz.probierless.ui.navigation
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-object MainViewRoute
+interface AppRoute
 
 @Serializable
-object EditorRoute
+object MainViewRoute : AppRoute
+
+@Serializable
+object EditorRoute : AppRoute
+
+@Serializable
+object SettingsRoute : AppRoute

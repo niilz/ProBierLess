@@ -4,6 +4,6 @@ object UiState {
     var state = UiStateEnum.MAIN
 }
 
-enum class UiStateEnum {
-    MAIN, EDITOR
+enum class UiStateEnum(val route: AppRoute) {
+    MAIN(MainViewRoute), EDITOR(EditorRoute), SETTINGS(SettingsRoute)
 }

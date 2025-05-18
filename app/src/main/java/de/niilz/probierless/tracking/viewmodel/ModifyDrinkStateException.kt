@@ -1,3 +1,5 @@
 package de.niilz.probierless.tracking.viewmodel
 
-class ModifyDrinkStateException(message: String) : RuntimeException(message)
+import de.niilz.probierless.cross.ProbierLessException
+
+class ModifyDrinkStateException(message: String) : ProbierLessException(message)

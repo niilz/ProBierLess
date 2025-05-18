@@ -16,16 +16,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
 import de.niilz.probierless.ui.components.common.MyButton
+import de.niilz.probierless.ui.navigation.NavControllerManager
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 @Composable
-fun MainView(innerPadding: PaddingValues = PaddingValues(0.dp), navigation: () -> Unit) {
+fun MainView(
+    innerPadding: PaddingValues = PaddingValues(0.dp),
+    navController: NavHostController? = null
+) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
 
@@ -52,14 +57,21 @@ fun MainView(innerPadding: PaddingValues = PaddingValues(0.dp), navigation: () -
                     .fillMaxWidth(.9f),
                 drinkStateViewModel::addDrink,
                 drinkStateViewModel::clearDrinks,
-                navigateToMainView = navigation
+                navigateToMainView = {
+                    NavControllerManager.navigateTo(
+                        UiStateEnum.MAIN,
+                        navController
+                    )
+                },
             )
         } else {
             Row(
                 modifier = Modifier.fillMaxWidth(.9f),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                MyButton("Anpassen", navigation)
+                MyButton(
+                    "Anpassen",
+                    { NavControllerManager.navigateTo(UiStateEnum.EDITOR, navController) })
                 MyButton("Reset", drinkStateViewModel::resetCounts)
             }
         }
@@ -72,7 +84,7 @@ fun MainViewPreview() {
     initDrinkRepositoryForPreview()
     addDrinks(10)
     ProBierLessTheme {
-        MainView {}
+        MainView()
     }
 }
 
