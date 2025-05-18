@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
@@ -24,7 +25,7 @@ import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 @Composable
-fun MainView(innerPadding: PaddingValues, navigation: () -> Unit) {
+fun MainView(innerPadding: PaddingValues = PaddingValues(0.dp), navigation: () -> Unit) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
 
@@ -71,7 +72,7 @@ fun MainViewPreview() {
     initDrinkRepositoryForPreview()
     addDrinks(10)
     ProBierLessTheme {
-        MainView(PaddingValues(), navigation = {})
+        MainView {}
     }
 }
 
