@@ -1,8 +1,7 @@
 # TODO
 
-- Add button that clears the counters for Next-Day (maybe on MainView next to Anpassen)
+- Test Settings (increment/reset day-/week-limit)
 - Add overview (show how many drinks have been consumed) ideally a diagram like bar or something
-- Add config screen to define max % per Day (per Week)
 - revisit colors
 - Make Input-Labels monospace and generally nicer
 - Have a drop-down for the Size-Types (Ml/Cl/L) and derive the keyboard for it
