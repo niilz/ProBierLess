@@ -42,14 +42,14 @@ fun Settings(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Wähle wie viele Getränke du pro Tag trinken möchtest\n(Klicke auf die Counter)",
+            "Wie viele Getränke möchtest du dir pro Tag erlauben?\n(Klicke auf die Counter)",
             Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Center
         )
         DrinkGrid(
-            drinks = drinks!!,
-            countDrink = TODO(),
-            deleteDrink = TODO(),
+            drinks = drinks,
+            countDrink = {},
+            deleteDrink = {},
         )
         MyInput(label = "Tage pro Woche", onUpdate = {/* TODO */ })
         // Display drink grid without any counts
