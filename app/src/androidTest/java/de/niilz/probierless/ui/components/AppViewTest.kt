@@ -23,11 +23,11 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 
-private val testDrinkName = "test-drink-name"
-private val testIcon = "test-icon"
-private val testAmount = "500"
-private val testUnit = "ml"
-private val testVol = "4.8"
+private const val testDrinkName = "test-drink-name"
+private const val testIcon = "test-icon"
+private const val testAmount = "500"
+private const val testUnit = "ml"
+private const val testVol = "4.8"
 
 class AppViewTest {
 
@@ -77,7 +77,7 @@ class AppViewTest {
         volInput.assertExists()
         volInput.performTextInput(testVol)
     }
-   
+
     private fun initRepositories() {
         RepositoryProvider.init(DrinkRepositoryTestImpl(), SettingsRepositoryTestImpl())
     }
