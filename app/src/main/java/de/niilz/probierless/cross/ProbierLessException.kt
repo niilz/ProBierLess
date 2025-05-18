@@ -1,3 +1,3 @@
 package de.niilz.probierless.cross
 
-class ProbierLessException(message: String) : RuntimeException(message)
+open class ProbierLessException(message: String) : RuntimeException(message)
