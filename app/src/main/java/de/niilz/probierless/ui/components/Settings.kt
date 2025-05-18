@@ -3,6 +3,7 @@ package de.niilz.probierless.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -48,15 +49,23 @@ fun Settings(
         )
         DrinkGrid(
             drinks = drinks,
-            countDrink = {},
-            deleteDrink = {},
+            countDrink = {
+                settingsViewModel::addDrinkToDayLimit
+            },
+            deleteDrink = { UnsupportedOperationException("Restoring alcohol per drink is not supported") },
         )
-        MyInput(label = "Tage pro Woche", onUpdate = {/* TODO */ })
+        MyInput(label = "Tage pro Woche", onUpdate = {/* TODO Week-Limit */ })
         // Display drink grid without any counts
         // Display total amount of alkohol allowed
         // Instruction:
         // Wähle an wie vielen Tagen du maximal dies Menge trinken möchtest
-        MyButton("Zurück", { NavControllerManager.navigateTo(UiStateEnum.MAIN, navController) })
+        Row(
+            modifier = Modifier.fillMaxWidth(.9f),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            MyButton("Zurück", { NavControllerManager.navigateTo(UiStateEnum.MAIN, navController) })
+            MyButton("Reset", settingsViewModel::resetAlcoholDayLimit)
+        }
     }
 }
 
