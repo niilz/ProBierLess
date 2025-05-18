@@ -78,7 +78,10 @@ fun MainView(navigation: () -> Unit) {
                     navigateToMainView = navigation
                 )
             } else {
-                Row(modifier = Modifier.fillMaxWidth(.9f)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(.9f),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
                     MyButton("Anpassen", navigation)
                     MyButton("Reset", drinkStateViewModel::resetCounts)
                 }
