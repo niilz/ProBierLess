@@ -14,7 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
+import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.components.common.MyInput
+import de.niilz.probierless.ui.navigation.NavControllerManager
+import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 @Composable
@@ -37,6 +40,7 @@ fun Settings(
         // Display total amount of alkohol allowed
         // Instruction:
         // Wähle an wie vielen Tagen du maximal dies Menge trinken möchtest
+        MyButton("Zurück", { NavControllerManager.navigateTo(UiStateEnum.MAIN, navController) })
     }
 }
 
