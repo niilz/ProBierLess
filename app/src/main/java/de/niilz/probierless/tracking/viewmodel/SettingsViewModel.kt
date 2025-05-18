@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import de.niilz.probierless.tracking.mapper.toUiCountZero
-import de.niilz.probierless.tracking.repository.DrinkRepository
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
+import de.niilz.probierless.tracking.repository.RepositoryProvider
+import de.niilz.probierless.tracking.repository.SettingsRepository
 import de.niilz.probierless.ui.data.Drink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

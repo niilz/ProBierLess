@@ -7,8 +7,8 @@ import de.niilz.probierless.cross.ProbierLessException
 import de.niilz.probierless.tracking.mapper.fromUi
 import de.niilz.probierless.tracking.mapper.toUi
 import de.niilz.probierless.tracking.repository.DrinkRepository
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
+import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.ui.data.Drink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

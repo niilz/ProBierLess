@@ -13,8 +13,8 @@ import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.L
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
+import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
@@ -100,7 +100,7 @@ class MainViewTest {
     @Test
     fun deletingDrinkRemovesDrinkCounter() = runTest {
         // given
-        val repo = DrinkRepositoryProvider.getRepository()!!
+        val repo = RepositoryProvider.getDrinkRepository()!!
         repo.addDrink(DrinkEntity("test-drink", "test-icon", L(0.5f), 0.5f))
         assertEquals(1, repo.fetchAllDrinks().size)
 
@@ -122,7 +122,7 @@ class MainViewTest {
     fun countingDrinkIncrementsCountValue() = runTest {
         // given
         UiState.state = UiStateEnum.MAIN
-        val repo = DrinkRepositoryProvider.getRepository()!!
+        val repo = RepositoryProvider.getDrinkRepository()!!
         val drinkName = "test-drink"
         repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f))
         assertEquals(1, repo.fetchAllDrinks().size)
@@ -152,7 +152,7 @@ class MainViewTest {
     fun resettingCounterWorks() = runTest {
         // given
         UiState.state = UiStateEnum.MAIN
-        val repo = DrinkRepositoryProvider.getRepository()!!
+        val repo = RepositoryProvider.getDrinkRepository()!!
         val drinkName = "test-drink"
         repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f, 42))
         repo.addDrink(DrinkEntity(drinkName, "test-icon", L(0.5f), 0.5f, 43))
@@ -184,7 +184,7 @@ class MainViewTest {
     }
 
     private fun initDrinkRepository() {
-        DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
+        RepositoryProvider.init(DrinkRepositoryTestImpl())
     }
 
     private fun fillAllInputs() {

@@ -2,8 +2,8 @@ package de.niilz.probierless.tracking.viewmodel
 
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.Ml
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
 import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
+import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.ui.data.Drink
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -26,7 +26,7 @@ class DrinkStateViewModelTest {
 
     @Before
     fun setup() {
-        DrinkRepositoryProvider.init(DrinkRepositoryTestImpl())
+        RepositoryProvider.init(DrinkRepositoryTestImpl())
         drinkStateViewModel = DrinkStateViewModel()
     }
 
@@ -50,7 +50,7 @@ class DrinkStateViewModelTest {
             Drink(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
             drinkStateViewModel.drinkState.value[1]
         )
-        val allRepoDrinks = DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()
+        val allRepoDrinks = RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()
         assertEquals(1, allRepoDrinks?.size)
         assertEquals(
             DrinkEntity(TEST_DRINK, TEST_ICON, TEST_SIZE, TEST_VOL),
@@ -76,7 +76,7 @@ class DrinkStateViewModelTest {
         )
         assertTrue(
             "repo should be empty",
-            DrinkRepositoryProvider.getRepository()?.fetchAllDrinks()?.isEmpty() == true
+            RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()?.isEmpty() == true
         )
     }
 }
