@@ -4,43 +4,62 @@ import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.L
 import de.niilz.probierless.tracking.repository.DrinkRepository
 import de.niilz.probierless.tracking.repository.RepositoryProvider
+import de.niilz.probierless.tracking.repository.SettingsRepository
 
 val emojiOptions = listOf("\uD83C\uDF7A", "\uD83C\uDF77", "\uD83C\uDF4E", "\uD83E\uDD43")
 
-fun initDrinkRepositoryForPreview() {
-    RepositoryProvider.init(object : DrinkRepository {
-        var idSequence = 0;
-        val previewDrinks = mutableMapOf<Int, DrinkEntity>()
-        override fun fetchAllDrinks(): MutableMap<Int, DrinkEntity> {
-            return previewDrinks
-        }
+fun initRepositoriesForPreview() {
+    RepositoryProvider.init(DrinkRepositoryTestImpl(), SettingsRepositoryTestImpl())
+}
 
-        override fun addDrink(drink: DrinkEntity): Int {
-            idSequence += 1
-            previewDrinks.put(idSequence, drink)
-            return idSequence
-        }
+class DrinkRepositoryTestImpl : DrinkRepository {
+    var idSequence = 0;
+    val previewDrinks = mutableMapOf<Int, DrinkEntity>()
+    override fun fetchAllDrinks(): MutableMap<Int, DrinkEntity> {
+        return previewDrinks
+    }
 
-        override fun updateDrink(
-            id: Int,
-            entity: DrinkEntity
-        ) {
-            previewDrinks.put(id, entity)
-        }
+    override fun addDrink(drink: DrinkEntity): Int {
+        idSequence += 1
+        previewDrinks.put(idSequence, drink)
+        return idSequence
+    }
 
-        override fun removeDrink(id: Int) {
-            previewDrinks.remove(id)
-        }
+    override fun updateDrink(
+        id: Int,
+        entity: DrinkEntity
+    ) {
+        previewDrinks.put(id, entity)
+    }
 
-        override fun clearAllDrinks() {
-            previewDrinks.clear()
-        }
-    })
+    override fun removeDrink(id: Int) {
+        previewDrinks.remove(id)
+    }
+
+    override fun clearAllDrinks() {
+        previewDrinks.clear()
+    }
+}
+
+class SettingsRepositoryTestImpl : SettingsRepository {
+    private var alcoholDayLimit = 0
+
+    override fun fetchAllDrinks(): MutableMap<Int, DrinkEntity> {
+        return RepositoryProvider.getDrinkRepository()!!.fetchAllDrinks()
+    }
+
+    override fun fetchAlcoholDayLimit(): Int {
+        return alcoholDayLimit
+    }
+
+    override fun storeAlcoholDayLimit(limit: Int) {
+        alcoholDayLimit = limit
+    }
 }
 
 fun addDrinks(amount: Int) {
     if (RepositoryProvider.getDrinkRepository() == null) {
-        initDrinkRepositoryForPreview()
+        initRepositoriesForPreview()
     }
     for (count in 1..amount) {
         val newDrink =
