@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -26,6 +28,7 @@ fun Settings(
     navController: NavHostController? = null
 ) {
     //val settingsViewModel = viewModel<SettingsViewModel>()
+    //val drinks by drinkStateViewModel.drinkState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -34,7 +37,7 @@ fun Settings(
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Wähle wie viele Getränke du pro Tag trinken möchtest")
+        Text("Wähle wie viele Getränke du pro Tag trinken möchtest\n(Klicke auf die Counter)", Modifier.fillMaxWidth(.9f), textAlign = TextAlign.Center)
         MyInput(label = "Tage pro Woche", onUpdate = {/* TODO */ })
         // Display drink grid without any counts
         // Display total amount of alkohol allowed

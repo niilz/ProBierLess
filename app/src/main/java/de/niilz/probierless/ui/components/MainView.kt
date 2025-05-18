@@ -1,6 +1,5 @@
 package de.niilz.probierless.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,8 +33,6 @@ fun MainView(
 ) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
-
-    Log.w("MainView", "UiState: ${UiState.state}")
 
     Column(
         modifier = Modifier
