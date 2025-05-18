@@ -2,25 +2,19 @@ package de.niilz.probierless.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initDrinkRepositoryForPreview
 import de.niilz.probierless.tracking.viewmodel.DrinkStateViewModel
@@ -28,63 +22,44 @@ import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
-import kotlinx.coroutines.launch
 
 @Composable
-fun MainView(navigation: () -> Unit) {
+fun MainView(innerPadding: PaddingValues, navigation: () -> Unit) {
 
     val drinkStateViewModel = viewModel<DrinkStateViewModel>()
 
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    Scaffold(
+    Column(
         modifier = Modifier
-            .fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { innerPadding ->
+            .fillMaxSize()
+            .padding(innerPadding),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        ObserveSnackBar(MessageSnackBarHub.messages, snackbarHostState) { errorEvent ->
-            scope.launch {
-                // Should not happen, but who knows
-                snackbarHostState.currentSnackbarData?.dismiss()
-                snackbarHostState.showSnackbar(errorEvent)
-            }
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        val drinks by drinkStateViewModel.drinkState.collectAsState()
 
-            val drinks by drinkStateViewModel.drinkState.collectAsState()
+        DrinkGrid(
+            Modifier.fillMaxHeight(.65f),
+            drinks,
+            drinkStateViewModel::countDrink,
+            drinkStateViewModel::deleteDrink
+        )
 
-            DrinkGrid(
-                Modifier.fillMaxHeight(.65f),
-                drinks,
-                drinkStateViewModel::countDrink,
-                drinkStateViewModel::deleteDrink
+        if (UiState.state === UiStateEnum.EDITOR) {
+            Editor(
+                modifier = Modifier
+                    .fillMaxWidth(.9f),
+                drinkStateViewModel::addDrink,
+                drinkStateViewModel::clearDrinks,
+                navigateToMainView = navigation
             )
-
-            if (UiState.state === UiStateEnum.EDITOR) {
-                Editor(
-                    modifier = Modifier
-                        .fillMaxWidth(.9f),
-                    drinkStateViewModel::addDrink,
-                    drinkStateViewModel::clearDrinks,
-                    navigateToMainView = navigation
-                )
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(.9f),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    MyButton("Anpassen", navigation)
-                    MyButton("Reset", drinkStateViewModel::resetCounts)
-                }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(.9f),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                MyButton("Anpassen", navigation)
+                MyButton("Reset", drinkStateViewModel::resetCounts)
             }
         }
     }
@@ -96,7 +71,7 @@ fun MainViewPreview() {
     initDrinkRepositoryForPreview()
     addDrinks(10)
     ProBierLessTheme {
-        MainView(navigation = {})
+        MainView(PaddingValues(), navigation = {})
     }
 }
 
