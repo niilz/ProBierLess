@@ -11,9 +11,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
+import de.niilz.probierless.dev.preview.DrinkRepositoryTestImpl
+import de.niilz.probierless.dev.preview.SettingsRepositoryTestImpl
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.L
-import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.ui.mapper.illegalDrinkSizeNaNErrorTemplate
 import de.niilz.probierless.ui.navigation.UiState
@@ -57,7 +58,7 @@ class MainViewTest {
 
     @Test
     fun canAddNewDrinkToUi() {
-        rule.setContent { MainView {} }
+        rule.setContent { MainView() }
 
         // Insert drink name
         val drinkInput = rule.onNodeWithTag(DRINK_INPUT_TAG)
@@ -81,7 +82,7 @@ class MainViewTest {
     @Test
     fun invalidDrinkAmountInputShowsUserErrors() {
         // given
-        rule.setContent { ProBierLessTheme { MainView {} } }
+        rule.setContent { ProBierLessTheme { MainView() } }
         fillAllInputs()
 
         // when
@@ -105,7 +106,7 @@ class MainViewTest {
         assertEquals(1, repo.fetchAllDrinks().size)
 
         rule.setContent {
-            MainView {}
+            MainView()
         }
 
         val removeBeerButtonX = rule.onNodeWithText("❌")
@@ -128,7 +129,7 @@ class MainViewTest {
         assertEquals(1, repo.fetchAllDrinks().size)
 
         rule.setContent {
-            ProBierLessTheme { MainView {} }
+            ProBierLessTheme { MainView() }
         }
 
         val testDrinkButton = rule.onNodeWithTag("drink-counter-1")
@@ -159,7 +160,7 @@ class MainViewTest {
         assertEquals(2, repo.fetchAllDrinks().size)
 
         rule.setContent {
-            ProBierLessTheme { MainView {} }
+            ProBierLessTheme { MainView() }
         }
 
         val testDrinkButtons = rule.onAllNodesWithText(drinkName)
@@ -184,7 +185,7 @@ class MainViewTest {
     }
 
     private fun initDrinkRepository() {
-        RepositoryProvider.init(DrinkRepositoryTestImpl())
+        RepositoryProvider.init(DrinkRepositoryTestImpl(), SettingsRepositoryTestImpl())
     }
 
     private fun fillAllInputs() {

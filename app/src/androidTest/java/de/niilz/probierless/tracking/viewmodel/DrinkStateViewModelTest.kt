@@ -1,8 +1,9 @@
 package de.niilz.probierless.tracking.viewmodel
 
+import de.niilz.probierless.dev.preview.DrinkRepositoryTestImpl
+import de.niilz.probierless.dev.preview.SettingsRepositoryTestImpl
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.dto.Ml
-import de.niilz.probierless.tracking.repository.DrinkRepositoryTestImpl
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.ui.data.Drink
 import org.junit.Assert.assertEquals
@@ -26,7 +27,10 @@ class DrinkStateViewModelTest {
 
     @Before
     fun setup() {
-        RepositoryProvider.init(DrinkRepositoryTestImpl())
+        RepositoryProvider.init(
+            DrinkRepositoryTestImpl(),
+            SettingsRepositoryTestImpl()
+        )
         drinkStateViewModel = DrinkStateViewModel()
     }
 
