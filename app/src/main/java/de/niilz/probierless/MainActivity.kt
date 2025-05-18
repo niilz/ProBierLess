@@ -22,7 +22,8 @@ import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.storage.Db
 import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
-import de.niilz.probierless.tracking.repository.DrinkRepositoryProvider
+import de.niilz.probierless.tracking.repository.RepositoryProvider
+import de.niilz.probierless.tracking.repository.SettingsRepositoryImpl
 import de.niilz.probierless.ui.components.MainView
 import de.niilz.probierless.ui.components.ObserveSnackBar
 import de.niilz.probierless.ui.components.Settings
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
         db.launchStore()
         Log.d(TAG, "setting up DrinkRepo")
 
-        DrinkRepositoryProvider.init(DrinkRepositoryImpl(db.store))
+        RepositoryProvider.init(DrinkRepositoryImpl(db.store), SettingsRepositoryImpl(db.store))
 
 
         enableEdgeToEdge()
