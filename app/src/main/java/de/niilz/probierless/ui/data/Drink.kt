@@ -7,5 +7,9 @@ data class Drink(
     val icon: String,
     val drinkSize: DrinkSize,
     val vol: Float,
-    val count: Int = 0
+    var count: Int = 0
 )
+
+fun Drink.resetCount() {
+    this.count = 0
+}

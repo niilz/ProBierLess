@@ -6,8 +6,5 @@ import de.niilz.probierless.ui.data.Drink
 fun toUi(drink: DrinkEntity) =
     Drink(drink.name, drink.icon, drink.drinkSize, drink.vol, drink.count)
 
-fun toUiCountZero(drink: DrinkEntity) =
-    Drink(drink.name, drink.icon, drink.drinkSize, drink.vol, 0)
-
 fun fromUi(drink: Drink) =
     DrinkEntity(drink.name, drink.icon, drink.drinkSize, drink.vol, drink.count)

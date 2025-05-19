@@ -3,12 +3,14 @@ package de.niilz.probierless.tracking.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
-import de.niilz.probierless.tracking.mapper.toUiCountZero
+import de.niilz.probierless.storage.entity.DrinkEntity
+import de.niilz.probierless.tracking.mapper.toUi
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.tracking.repository.SettingsRepository
 import de.niilz.probierless.tracking.util.Alcalculator
 import de.niilz.probierless.ui.data.Drink
+import de.niilz.probierless.ui.data.resetCount
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -35,7 +37,13 @@ class SettingsViewModel : ViewModel() {
 
     private fun initDrinkState() =
         RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()
-            ?.map { Pair(it.key, toUiCountZero(it.value)) }?.toMap() ?: emptyState()
+            ?.map { Pair(it.key, mapToUiAndResetCount(it.value)) }?.toMap() ?: emptyState()
+
+    private fun mapToUiAndResetCount(drinkEntity: DrinkEntity): Drink {
+        val drink = toUi(drinkEntity)
+        drink.resetCount()
+        return drink
+    }
 
     private fun settingsRepo(): SettingsRepository = RepositoryProvider.getSettingsRepository()
         ?: throw RepositoryNotInitializedError("The SettingsRepository has not been initialized")
