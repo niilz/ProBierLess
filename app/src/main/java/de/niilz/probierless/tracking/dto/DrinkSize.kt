@@ -15,7 +15,7 @@ data class Cl(private val cl: Int) : DrinkSize {
 data class L(private val l: Float) : DrinkSize {
     override fun toString() = "${l}l"
     override val sizeInMl: Int
-        get() = (l * 10).toInt()
+        get() = (l * 1000).toInt()
 }
 
 interface DrinkSize {

@@ -3,11 +3,11 @@ package de.niilz.probierless.tracking.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
-import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.mapper.toUiCountZero
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.tracking.repository.SettingsRepository
+import de.niilz.probierless.tracking.util.Alcalculator
 import de.niilz.probierless.ui.data.Drink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,16 +25,12 @@ class SettingsViewModel : ViewModel() {
         val drink = settingsRepo().fetchDrink(drinkId)
             ?: throw RepositoryNotInitializedError("Could not add alcohol from drink with id $drinkId because it does not exist")
         val currentDayLimit = settingsRepo().fetchAlcoholDayLimit()
-        val alcoholAmount = calcAlcoholAmount(drink)
+        val alcoholAmount = Alcalculator.calcAlcoholAmount(drink)
         settingsRepo().storeAlcoholDayLimit(currentDayLimit + alcoholAmount)
     }
 
     fun resetAlcoholDayLimit() {
         settingsRepo().resetAlcoholDayLimit()
-    }
-
-    private fun calcAlcoholAmount(drink: DrinkEntity): Int {
-        TODO()
     }
 
     private fun initDrinkState() =
