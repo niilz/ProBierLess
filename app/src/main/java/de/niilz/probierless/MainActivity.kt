@@ -13,8 +13,6 @@ import de.niilz.probierless.tracking.repository.DrinkRepositoryImpl
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.tracking.repository.SettingsRepositoryImpl
 import de.niilz.probierless.ui.components.AppView
-import de.niilz.probierless.ui.components.MainView
-import de.niilz.probierless.ui.theme.ProBierLessTheme
 
 class MainActivity : ComponentActivity() {
 
