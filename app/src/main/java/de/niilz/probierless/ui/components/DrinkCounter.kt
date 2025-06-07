@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.MaterialTheme
@@ -22,9 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.tracking.dto.Ml
+import de.niilz.probierless.ui.components.common.MyAutoSizeText
 import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.navigation.UiState
 import de.niilz.probierless.ui.navigation.UiStateEnum
@@ -76,36 +74,17 @@ fun DrinkCounter(
                     Text("❌", fontSize = TextUnit(20f, TextUnitType.Sp))
                 }
             }
+
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(modifier = modifier.fillMaxWidth(.5f)) {
-                    BasicText(
-                        text = "${drink.drinkSize}",
-                        maxLines = 1,
-                        autoSize = TextAutoSize.StepBased(
-                            maxFontSize = 20.sp,
-                            minFontSize = 10.sp,
-                            stepSize = 2.sp
-                        ),
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize
-                        )
-                    )
+                    MyAutoSizeText("${drink.drinkSize}")
                 }
                 Box(modifier.fillMaxWidth()) {
-                    BasicText(
-                        text = "${drink.vol}‰",
-                        maxLines = 1,
-                        autoSize = TextAutoSize.StepBased(
-                            maxFontSize = 20.sp,
-                            minFontSize = 10.sp,
-                            stepSize = 2.sp
-                        )
-                    )
+                    MyAutoSizeText("${drink.vol}‰")
+
                 }
             }
             Text(
