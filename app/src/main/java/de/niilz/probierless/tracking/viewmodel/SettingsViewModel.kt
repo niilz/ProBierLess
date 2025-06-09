@@ -39,6 +39,10 @@ class SettingsViewModel : ViewModel() {
         settingsRepo().resetAlcoholDayLimitGram()
     }
 
+    fun readMaxDaysPerWeek(): Int {
+        return settingsRepo().fetchMaxDaysPerWeek()
+    }
+
     private fun initDrinkState() =
         RepositoryProvider.getDrinkRepository()?.fetchAllDrinks()
             ?.map { Pair(it.key, mapToUiAndResetCount(it.value)) }?.toMap() ?: emptyState()

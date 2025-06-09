@@ -1,4 +1,4 @@
-package de.niilz.probierless.ui.components
+package de.niilz.probierless.ui.components.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,6 +22,7 @@ import de.niilz.probierless.dev.preview.addDrinks
 import de.niilz.probierless.dev.preview.initRepositoriesForPreview
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.tracking.viewmodel.SettingsViewModel
+import de.niilz.probierless.ui.components.DrinkGrid
 import de.niilz.probierless.ui.components.common.MyButton
 import de.niilz.probierless.ui.components.common.MyInput
 import de.niilz.probierless.ui.navigation.NavControllerManager
@@ -49,16 +49,9 @@ fun Settings(
             Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Center
         )
-        Text(
-            "Maximale Alkoholmenge pro Tag:",
-            Modifier.fillMaxWidth(.9f),
-            textAlign = TextAlign.Center
-        )
-        Text(
-            "${settingsViewModel.readAlcoholDayLimitGram()}g",
-            Modifier.fillMaxWidth(.9f),
-            textAlign = TextAlign.Center,
-            fontSize = MaterialTheme.typography.displayLarge.fontSize
+        MaxAmountSetting(
+            maxAlcAmountPerDayGram = settingsViewModel.readAlcoholDayLimitGram(),
+            maxAlcDaysPerWeek = settingsViewModel.readMaxDaysPerWeek()
         )
         DrinkGrid(
             drinks = drinks,
@@ -87,6 +80,7 @@ fun Settings(
 fun SettingsPreview() {
     initRepositoriesForPreview()
     RepositoryProvider.getSettingsRepository()!!.storeAlcoholDayLimitGram(5)
+    RepositoryProvider.getSettingsRepository()!!.storeMaxDaysPerWeek(3)
     addDrinks(6)
     ProBierLessTheme {
         Settings()

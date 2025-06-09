@@ -21,4 +21,13 @@ class SettingsRepositoryImpl(private val storeManager: EmbeddedStorageManager) :
         probierLessStore.alcoholDayLimit = newLimit
         storeManager.store(probierLessStore)
     }
+
+    override fun fetchMaxDaysPerWeek(): Int {
+        return probierLessStore.alcoholDaysPerWeek
+    }
+
+    override fun storeMaxDaysPerWeek(maxDaysPerWeek: Int) {
+        probierLessStore.alcoholDaysPerWeek = maxDaysPerWeek
+        storeManager.store(probierLessStore)
+    }
 }

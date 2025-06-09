@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.niilz.probierless.cross.MessageSnackBarHub
+import de.niilz.probierless.ui.components.settings.Settings
 import de.niilz.probierless.ui.navigation.EditorRoute
 import de.niilz.probierless.ui.navigation.MainViewRoute
 import de.niilz.probierless.ui.navigation.SettingsRoute

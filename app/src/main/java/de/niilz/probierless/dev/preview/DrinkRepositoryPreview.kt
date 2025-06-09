@@ -43,6 +43,7 @@ class DrinkRepositoryTestImpl : DrinkRepository {
 
 class SettingsRepositoryTestImpl : SettingsRepository {
     private var alcoholDayLimit = 0
+    private var alcoholDaysPerWeekLimit = 0
 
     override fun fetchAllDrinks(): MutableMap<Int, DrinkEntity> {
         return RepositoryProvider.getDrinkRepository()!!.fetchAllDrinks()
@@ -54,6 +55,14 @@ class SettingsRepositoryTestImpl : SettingsRepository {
 
     override fun storeAlcoholDayLimitGram(limitGram: Int) {
         alcoholDayLimit = limitGram
+    }
+
+    override fun fetchMaxDaysPerWeek(): Int {
+        return alcoholDaysPerWeekLimit
+    }
+
+    override fun storeMaxDaysPerWeek(maxDaysPerWeek: Int) {
+        alcoholDaysPerWeekLimit = maxDaysPerWeek
     }
 }
 

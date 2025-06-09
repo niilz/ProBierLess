@@ -14,4 +14,7 @@ interface SettingsRepository {
     fun resetAlcoholDayLimitGram() {
         storeAlcoholDayLimitGram(0)
     }
+
+    fun fetchMaxDaysPerWeek(): Int
+    fun storeMaxDaysPerWeek(maxDaysPerWeek: Int)
 }
