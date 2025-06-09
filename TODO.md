@@ -1,6 +1,6 @@
 # TODO
 
-- Test Settings (increment/reset day-/week-limit)
+- Show which drinks (how many) are counted for the limit
 - Add overview (show how many drinks have been consumed) ideally a diagram like bar or something
 - revisit colors
 - Make Input-Labels monospace and generally nicer
