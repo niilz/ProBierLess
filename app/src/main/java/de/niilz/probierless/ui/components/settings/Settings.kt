@@ -29,6 +29,9 @@ import de.niilz.probierless.ui.navigation.NavControllerManager
 import de.niilz.probierless.ui.navigation.UiStateEnum
 import de.niilz.probierless.ui.theme.ProBierLessTheme
 
+const val DAYS_PER_WEEK_INPUT_TAG = "days_per_week_input_tag"
+const val SAVE_BUTTON_TAG = "save-button-tag"
+
 @Composable
 fun Settings(
     innerPadding: PaddingValues = PaddingValues(0.dp),
@@ -63,7 +66,9 @@ fun Settings(
         var maxDaysPerWeek = ""
         MyInput(
             label = "Tage pro Woche",
-            onUpdate = { maxDaysPerWeek = it })
+            onUpdate = { maxDaysPerWeek = it },
+            testTagName = DAYS_PER_WEEK_INPUT_TAG,
+        )
         // Display drink grid without any counts
         Row(
             modifier = Modifier.fillMaxWidth(.9f),
@@ -71,9 +76,11 @@ fun Settings(
         ) {
             MyButton("Zurück", { NavControllerManager.navigateTo(UiStateEnum.MAIN, navController) })
             MyButton("Reset", settingsViewModel::resetAlcoholDayLimit)
-            MyButton("Speichern", {
-                settingsViewModel.writeMaxDaysPerWeek(maxDaysPerWeek)
-            })
+            MyButton(
+                "Speichern",
+                { settingsViewModel.writeMaxDaysPerWeek(maxDaysPerWeek) },
+                testTagName = SAVE_BUTTON_TAG
+            )
         }
     }
 }

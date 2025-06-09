@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+const val illegalDaysOfWeekNaNErrorTemplate = "Ungültige Eingabe für Tage pro Woche:"
+
 class SettingsViewModel : ViewModel() {
 
     init {
@@ -71,7 +73,7 @@ class SettingsViewModel : ViewModel() {
         } catch (e: NumberFormatException) {
             Log.e(TAG, "Invalid input for max days per week: $maxDaysPerWeek", e)
             viewModelScope.launch {
-                MessageSnackBarHub.addMessage("Ungültige Eingabe für Tage pro Woche: $maxDaysPerWeek")
+                MessageSnackBarHub.addMessage("$illegalDaysOfWeekNaNErrorTemplate $maxDaysPerWeek")
             }
             return
         }
