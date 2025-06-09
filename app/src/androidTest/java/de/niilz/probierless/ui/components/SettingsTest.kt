@@ -1,5 +1,6 @@
 package de.niilz.probierless.ui.components
 
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -11,6 +12,7 @@ import de.niilz.probierless.dev.preview.SettingsRepositoryTestImpl
 import de.niilz.probierless.tracking.repository.RepositoryProvider
 import de.niilz.probierless.tracking.viewmodel.unsupportedDaysOfWeekErrorTemplate
 import de.niilz.probierless.ui.components.settings.DAYS_PER_WEEK_INPUT_TAG
+import de.niilz.probierless.ui.components.settings.DAYS_PER_WEEK_TAG
 import de.niilz.probierless.ui.components.settings.SAVE_BUTTON_TAG
 import de.niilz.probierless.ui.components.settings.Settings
 import kotlinx.coroutines.flow.first
@@ -49,7 +51,7 @@ class SettingsTest {
 
         // then
         val error = MessageSnackBarHub.messages.first()
-        assertEquals("$unsupportedDaysOfWeekErrorTemplate NaN", error)
+        assertEquals(unsupportedDaysOfWeekErrorTemplate, error)
     }
 
     @Test
@@ -70,6 +72,29 @@ class SettingsTest {
         // then
         val error = MessageSnackBarHub.messages.first()
         assertEquals(unsupportedDaysOfWeekErrorTemplate, error)
+    }
+
+    @Test
+    fun daysPerWeekIsSaved() = runTest {
+        // given
+        rule.setContent {
+            Settings()
+        }
+
+        val weekInput = rule.onNodeWithTag(DAYS_PER_WEEK_INPUT_TAG)
+        weekInput.assertExists()
+        val daysPerWeek = rule.onNodeWithTag(DAYS_PER_WEEK_TAG)
+        daysPerWeek.assertExists()
+
+        // when
+        weekInput.performTextInput("3")
+        val createButton = rule.onNodeWithTag(SAVE_BUTTON_TAG)
+        createButton.performClick()
+
+        // then
+        daysPerWeek.assertTextEquals("(an 3 Tagen)")
+        val maxDaysPerWeek = RepositoryProvider.getSettingsRepository()!!.fetchMaxDaysPerWeek()
+        assertEquals(3, maxDaysPerWeek)
     }
 
     private fun initRepositories() {

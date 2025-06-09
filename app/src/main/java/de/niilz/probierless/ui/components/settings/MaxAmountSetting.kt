@@ -8,9 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import de.niilz.probierless.ui.theme.ProBierLessTheme
+
+const val DAYS_PER_WEEK_TAG = "days_per_week_tag"
 
 @Composable
 fun MaxAmountSetting(
@@ -47,8 +50,8 @@ fun MaxAmountSetting(
                 )
                 Text(
                     "(an $maxAlcDaysPerWeek Tagen)",
-                    modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    modifier.fillMaxWidth().testTag(DAYS_PER_WEEK_TAG),
+                    textAlign = TextAlign.Center,
                 )
             }
         }

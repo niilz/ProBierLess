@@ -38,7 +38,10 @@ fun Settings(
     navController: NavHostController? = null
 ) {
     val settingsViewModel = viewModel<SettingsViewModel>()
-    val drinks by settingsViewModel.settingsState.collectAsState()
+    val drinks by settingsViewModel.drinksSettingsState.collectAsState()
+    val alcoholDayLimitGram by settingsViewModel.alcoholDayLimitGram.collectAsState()
+    val maxAlcDaysPerWeek by settingsViewModel.daysPerWeekState.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -53,14 +56,12 @@ fun Settings(
             textAlign = TextAlign.Center
         )
         MaxAmountSetting(
-            maxAlcAmountPerDayGram = settingsViewModel.readAlcoholDayLimitGram(),
-            maxAlcDaysPerWeek = settingsViewModel.readMaxDaysPerWeek()
+            maxAlcAmountPerDayGram = alcoholDayLimitGram,
+            maxAlcDaysPerWeek = maxAlcDaysPerWeek
         )
         DrinkGrid(
             drinks = drinks,
-            countDrink = {
-                settingsViewModel::addDrinkToDayLimit
-            },
+            countDrink = settingsViewModel::addDrinkToDayLimit,
             deleteDrink = { UnsupportedOperationException("Restoring alcohol per drink is not supported") },
         )
         var maxDaysPerWeek = ""

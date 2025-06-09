@@ -26,12 +26,12 @@ class SettingsViewModel : ViewModel() {
         Log.d(TAG, "SettingsViewModel initialized")
     }
 
-    private val _settingsState = MutableStateFlow(initDrinkState().toMutableMap())
-    val settingsState: StateFlow<MutableMap<Int, Drink>> = _settingsState
-
-    fun readAlcoholDayLimitGram(): Int {
-        return settingsRepo().fetchAlcoholDayLimitGram()
-    }
+    private val _drinksSettingsState = MutableStateFlow(initDrinkState().toMutableMap())
+    val drinksSettingsState: StateFlow<MutableMap<Int, Drink>> = _drinksSettingsState
+    private val _alcoholDayLimitGram = MutableStateFlow(settingsRepo().fetchAlcoholDayLimitGram())
+    val alcoholDayLimitGram: StateFlow<Int> = _alcoholDayLimitGram
+    private val _daysPerWeekState = MutableStateFlow(settingsRepo().fetchMaxDaysPerWeek())
+    val daysPerWeekState: StateFlow<Int> = _daysPerWeekState
 
     fun addDrinkToDayLimit(drinkId: Int) {
         val drink = settingsRepo().fetchDrink(drinkId)
@@ -39,14 +39,12 @@ class SettingsViewModel : ViewModel() {
         val currentDayLimit = settingsRepo().fetchAlcoholDayLimitGram()
         val alcoholAmount = Alcalculator.calcAlcoholAmount(drink)
         settingsRepo().storeAlcoholDayLimitGram(currentDayLimit + alcoholAmount)
+        _alcoholDayLimitGram.value = settingsRepo().fetchAlcoholDayLimitGram()
     }
 
     fun resetAlcoholDayLimit() {
         settingsRepo().resetAlcoholDayLimitGram()
-    }
-
-    fun readMaxDaysPerWeek(): Int {
-        return settingsRepo().fetchMaxDaysPerWeek()
+        _alcoholDayLimitGram.value = settingsRepo().fetchAlcoholDayLimitGram()
     }
 
     private fun initDrinkState() =
@@ -78,6 +76,7 @@ class SettingsViewModel : ViewModel() {
                 return
             }
             settingsRepo().storeMaxDaysPerWeek(maxDays)
+            _daysPerWeekState.value = settingsRepo().fetchMaxDaysPerWeek()
         } catch (e: NumberFormatException) {
             Log.e(TAG, "Invalid input for max days per week: $maxDaysPerWeek", e)
             viewModelScope.launch {
