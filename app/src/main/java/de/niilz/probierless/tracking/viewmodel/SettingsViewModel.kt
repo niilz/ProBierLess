@@ -3,6 +3,8 @@ package de.niilz.probierless.tracking.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.storage.entity.DrinkEntity
 import de.niilz.probierless.tracking.mapper.toUi
 import de.niilz.probierless.tracking.repository.RepositoryNotInitializedError
@@ -13,6 +15,7 @@ import de.niilz.probierless.ui.data.Drink
 import de.niilz.probierless.ui.data.resetCount
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class SettingsViewModel : ViewModel() {
 
@@ -59,6 +62,19 @@ class SettingsViewModel : ViewModel() {
     fun emptyState(): MutableMap<Int, Drink> {
         Log.w(TAG, "Could not fetch from Repository, returning empty state")
         return mutableStateMapOf()
+    }
+
+    fun writeMaxDaysPerWeek(maxDaysPerWeek: String) {
+        try {
+            val maxDays = maxDaysPerWeek.toInt()
+            settingsRepo().storeMaxDaysPerWeek(maxDays)
+        } catch (e: NumberFormatException) {
+            Log.e(TAG, "Invalid input for max days per week: $maxDaysPerWeek", e)
+            viewModelScope.launch {
+                MessageSnackBarHub.addMessage("Ungültige Eingabe für Tage pro Woche: $maxDaysPerWeek")
+            }
+            return
+        }
     }
 
     companion object {

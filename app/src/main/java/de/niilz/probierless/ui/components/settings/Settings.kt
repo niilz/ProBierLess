@@ -60,17 +60,20 @@ fun Settings(
             },
             deleteDrink = { UnsupportedOperationException("Restoring alcohol per drink is not supported") },
         )
-        MyInput(label = "Tage pro Woche", onUpdate = {/* TODO Week-Limit */ })
+        var maxDaysPerWeek = ""
+        MyInput(
+            label = "Tage pro Woche",
+            onUpdate = { maxDaysPerWeek = it })
         // Display drink grid without any counts
-        // Display total amount of alcohol allowed
-        // Instruction:
-        // Wähle an wie vielen Tagen du maximal dies Menge trinken möchtest
         Row(
             modifier = Modifier.fillMaxWidth(.9f),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             MyButton("Zurück", { NavControllerManager.navigateTo(UiStateEnum.MAIN, navController) })
             MyButton("Reset", settingsViewModel::resetAlcoholDayLimit)
+            MyButton("Speichern", {
+                settingsViewModel.writeMaxDaysPerWeek(maxDaysPerWeek)
+            })
         }
     }
 }
