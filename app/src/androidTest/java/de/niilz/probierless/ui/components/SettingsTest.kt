@@ -9,7 +9,7 @@ import de.niilz.probierless.cross.MessageSnackBarHub
 import de.niilz.probierless.dev.preview.DrinkRepositoryTestImpl
 import de.niilz.probierless.dev.preview.SettingsRepositoryTestImpl
 import de.niilz.probierless.tracking.repository.RepositoryProvider
-import de.niilz.probierless.tracking.viewmodel.illegalDaysOfWeekNaNErrorTemplate
+import de.niilz.probierless.tracking.viewmodel.unsupportedDaysOfWeekErrorTemplate
 import de.niilz.probierless.ui.components.settings.DAYS_PER_WEEK_INPUT_TAG
 import de.niilz.probierless.ui.components.settings.SAVE_BUTTON_TAG
 import de.niilz.probierless.ui.components.settings.Settings
@@ -49,7 +49,27 @@ class SettingsTest {
 
         // then
         val error = MessageSnackBarHub.messages.first()
-        assertEquals("$illegalDaysOfWeekNaNErrorTemplate NaN", error)
+        assertEquals("$unsupportedDaysOfWeekErrorTemplate NaN", error)
+    }
+
+    @Test
+    fun daysPerWeekMustBeBetween1And7() = runTest {
+        // given
+        rule.setContent {
+            Settings()
+        }
+
+        val weekInput = rule.onNodeWithTag(DAYS_PER_WEEK_INPUT_TAG)
+        weekInput.assertExists()
+
+        // when
+        weekInput.performTextInput("42")
+        val createButton = rule.onNodeWithTag(SAVE_BUTTON_TAG)
+        createButton.performClick()
+
+        // then
+        val error = MessageSnackBarHub.messages.first()
+        assertEquals(unsupportedDaysOfWeekErrorTemplate, error)
     }
 
     private fun initRepositories() {

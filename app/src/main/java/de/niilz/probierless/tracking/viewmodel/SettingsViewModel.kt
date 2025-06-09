@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-const val illegalDaysOfWeekNaNErrorTemplate = "Ungültige Eingabe für Tage pro Woche:"
+const val unsupportedDaysOfWeekErrorTemplate =
+    "Tage pro Woche muss eine Zahl zwischen 1 und 7 sein."
 
 class SettingsViewModel : ViewModel() {
 
@@ -69,11 +70,18 @@ class SettingsViewModel : ViewModel() {
     fun writeMaxDaysPerWeek(maxDaysPerWeek: String) {
         try {
             val maxDays = maxDaysPerWeek.toInt()
+            if (maxDays < 1 || maxDays > 7) {
+                Log.e(TAG, "Max days per week must be between 1 and 7: $maxDays")
+                viewModelScope.launch {
+                    MessageSnackBarHub.addMessage(unsupportedDaysOfWeekErrorTemplate)
+                }
+                return
+            }
             settingsRepo().storeMaxDaysPerWeek(maxDays)
         } catch (e: NumberFormatException) {
             Log.e(TAG, "Invalid input for max days per week: $maxDaysPerWeek", e)
             viewModelScope.launch {
-                MessageSnackBarHub.addMessage("$illegalDaysOfWeekNaNErrorTemplate $maxDaysPerWeek")
+                MessageSnackBarHub.addMessage(unsupportedDaysOfWeekErrorTemplate)
             }
             return
         }
