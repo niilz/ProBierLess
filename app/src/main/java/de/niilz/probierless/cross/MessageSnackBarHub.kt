@@ -1,6 +1,5 @@
 package de.niilz.probierless.cross
 
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -12,7 +11,8 @@ object MessageSnackBarHub {
     val messages = _messages.receiveAsFlow()
 
     suspend fun addMessage(snackBarMessage: String) {
-        Log.d(TAG, "Adding message to snackbar: $snackBarMessage")
+        //Log.d(TAG, "Adding message to snackbar: $snackBarMessage")
+        println("Adding message to snackbar: $snackBarMessage")
         _messages.send(snackBarMessage)
     }
 
