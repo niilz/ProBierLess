@@ -13,11 +13,11 @@ class SettingsRepositoryImpl(private val storeManager: EmbeddedStorageManager) :
         return probierLessStore.drinks
     }
 
-    override fun fetchAlcoholDayLimit(): Int {
+    override fun fetchAlcoholDayLimitGram(): Int {
         return probierLessStore.alcoholDayLimit
     }
 
-    override fun storeAlcoholDayLimit(newLimit: Int) {
+    override fun storeAlcoholDayLimitGram(newLimit: Int) {
         probierLessStore.alcoholDayLimit = newLimit
         storeManager.store(probierLessStore)
     }

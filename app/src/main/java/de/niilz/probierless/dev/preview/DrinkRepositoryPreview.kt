@@ -48,12 +48,12 @@ class SettingsRepositoryTestImpl : SettingsRepository {
         return RepositoryProvider.getDrinkRepository()!!.fetchAllDrinks()
     }
 
-    override fun fetchAlcoholDayLimit(): Int {
+    override fun fetchAlcoholDayLimitGram(): Int {
         return alcoholDayLimit
     }
 
-    override fun storeAlcoholDayLimit(limit: Int) {
-        alcoholDayLimit = limit
+    override fun storeAlcoholDayLimitGram(limitGram: Int) {
+        alcoholDayLimit = limitGram
     }
 }
 

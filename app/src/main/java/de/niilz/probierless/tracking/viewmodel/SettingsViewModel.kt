@@ -23,16 +23,20 @@ class SettingsViewModel : ViewModel() {
     private val _settingsState = MutableStateFlow(initDrinkState().toMutableMap())
     val settingsState: StateFlow<MutableMap<Int, Drink>> = _settingsState
 
+    fun readAlcoholDayLimitGram(): Int {
+        return settingsRepo().fetchAlcoholDayLimitGram()
+    }
+
     fun addDrinkToDayLimit(drinkId: Int) {
         val drink = settingsRepo().fetchDrink(drinkId)
             ?: throw RepositoryNotInitializedError("Could not add alcohol from drink with id $drinkId because it does not exist")
-        val currentDayLimit = settingsRepo().fetchAlcoholDayLimit()
+        val currentDayLimit = settingsRepo().fetchAlcoholDayLimitGram()
         val alcoholAmount = Alcalculator.calcAlcoholAmount(drink)
-        settingsRepo().storeAlcoholDayLimit(currentDayLimit + alcoholAmount)
+        settingsRepo().storeAlcoholDayLimitGram(currentDayLimit + alcoholAmount)
     }
 
     fun resetAlcoholDayLimit() {
-        settingsRepo().resetAlcoholDayLimit()
+        settingsRepo().resetAlcoholDayLimitGram()
     }
 
     private fun initDrinkState() =
