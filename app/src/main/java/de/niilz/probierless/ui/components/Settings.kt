@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -49,8 +50,15 @@ fun Settings(
             textAlign = TextAlign.Center
         )
         Text(
-            "Maximale Alkoholmenge pro Tag: ${settingsViewModel.readAlcoholDayLimitGram()}g",
-            Modifier.fillMaxWidth(.9f)
+            "Maximale Alkoholmenge pro Tag:",
+            Modifier.fillMaxWidth(.9f),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            "${settingsViewModel.readAlcoholDayLimitGram()}g",
+            Modifier.fillMaxWidth(.9f),
+            textAlign = TextAlign.Center,
+            fontSize = MaterialTheme.typography.displayLarge.fontSize
         )
         DrinkGrid(
             drinks = drinks,
